@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: cushion
+
+logging:
+    level:
+      org.hibernate.SQL: debug
