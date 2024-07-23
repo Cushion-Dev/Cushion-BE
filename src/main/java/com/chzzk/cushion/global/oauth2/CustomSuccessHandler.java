@@ -8,14 +8,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
 
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createAccessCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createCookie;
@@ -23,6 +20,9 @@ import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createCookie;
 @Component
 @RequiredArgsConstructor
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    @Value("${oauth2.success.redirect-url}")
+    private String redirectUrl;
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
@@ -42,6 +42,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addCookie(createCookie(refreshToken));
         response.addCookie(createAccessCookie(accessToken));
-        response.sendRedirect("http://localhost:3000/");
+        response.sendRedirect(redirectUrl);
     }
 }
