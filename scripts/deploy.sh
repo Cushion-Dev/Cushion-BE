@@ -13,6 +13,6 @@ else
 fi
 
 # 새로운 애플리케이션 실행
-sudo nohup java -jar -Dspring.profiles.active=dev $JAR_PATH > /dev/null 2>&1 &
+nohup java -jar -Dspring.profiles.active=dev $JAR_PATH &
 
 echo "Deployment complete."
