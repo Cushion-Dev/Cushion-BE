@@ -22,6 +22,7 @@ public enum ErrorCode {
     EXPIRED_JWT_TOKEN(UNAUTHORIZED, "만료된 토큰 입니다."),
     INVALID_JWT_TOKEN(UNAUTHORIZED, "유효하지 않은 토큰입니다"),
     UNAUTHORIZED_REISSUE_TOKEN(UNAUTHORIZED, "로그아웃 상태에서 토큰을 재발급 받을 수 없습니다."),
+    NEED_LOGIN(UNAUTHORIZED, "로그인이 필요합니다."),
 
     // 403
 
