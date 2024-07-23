@@ -73,7 +73,9 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:8081");
         configuration.addAllowedOriginPattern("http://localhost:3000"); // 프론트 쪽에서 허용
-        configuration.addAllowedOriginPattern("https://223.130.132.182"); // 도메인 주소
+        configuration.addAllowedOriginPattern("http://223.130.132.182"); // 도메인 주소
+        configuration.addAllowedOriginPattern("http://223.130.132.182:8080");
+        configuration.addAllowedOriginPattern("http://223.130.132.182:8081");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
