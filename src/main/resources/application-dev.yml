@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cushion
     username: root
-    password: cushionsql
+    password: ${DEV_MYSQL_PASSWORD}
 
   security:
     oauth2:
