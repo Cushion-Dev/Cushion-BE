@@ -26,3 +26,7 @@ spring:
             redirect-uri: http://localhost:8081/login/oauth2/code/kakao
 server:
   port: 8081
+
+oauth2:
+  success:
+    redirect-url: http://localhost:3000
