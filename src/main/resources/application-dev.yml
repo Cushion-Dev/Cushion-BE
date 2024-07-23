@@ -27,3 +27,7 @@ spring:
 logging:
     level:
       org.hibernate.SQL: debug
+
+oauth2:
+  success:
+    redirect-url: http://223.130.132.182:3000/
