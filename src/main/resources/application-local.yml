@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cushion
+    username: root
+    password: ${LOCAL_MYSQL_PASSWORD}
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            redirect-uri: http://localhost:8081/login/oauth2/code/google
+          naver:
+            redirect-uri: http://localhost:8081/login/oauth2/code/naver
+          kakao:
+            redirect-uri: http://localhost:8081/login/oauth2/code/kakao
+server:
+  port: 8081
