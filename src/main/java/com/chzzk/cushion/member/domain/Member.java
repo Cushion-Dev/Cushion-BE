@@ -35,6 +35,12 @@ public class Member extends BaseTimeEntity {
 
     private String username;
 
+    private String affiliation;
+
+    private String job;
+
+    private String realName;
+
     @OneToMany(mappedBy = "member")
     private List<ChatRoom> chatRooms = new ArrayList<>();
 
@@ -43,5 +49,11 @@ public class Member extends BaseTimeEntity {
                 .filter(chatRoom -> chatRoom.getId().equals(roomId))
                 .findFirst()
                 .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_CHAT_ROOT));
+    }
+
+    public void updateAdditionalInfo(String affiliation, String job, String realName) {
+        this.affiliation = affiliation;
+        this.job = job;
+        this.realName = realName;
     }
 }
