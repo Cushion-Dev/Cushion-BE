@@ -20,6 +20,6 @@ public class ChangeStyleController {
     @Operation(summary = "문체 변환", description = "문체를 변환합니다.")
     @GetMapping
     public String changeStyle(@RequestParam String message) { // TODO 회원 dto 추가
-        return "변환된 내용";
+        return changeStyleService.changeStyle(message);
     }
 }
