@@ -62,7 +62,7 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService))
-                        .successHandler(customSuccessHandler) // customSuccessHandler 등록 -> 로그인이 성공하면 쿠키에 담김
+                        .successHandler(customSuccessHandler)
                 );
 
         return http.build();
@@ -73,7 +73,9 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:8081");
         configuration.addAllowedOriginPattern("http://localhost:3000"); // 프론트 쪽에서 허용
-        configuration.addAllowedOriginPattern("https://223.130.132.182"); // 도메인 주소
+        configuration.addAllowedOriginPattern("http://223.130.132.182"); // 도메인 주소
+        configuration.addAllowedOriginPattern("http://223.130.132.182:8080");
+        configuration.addAllowedOriginPattern("http://223.130.132.182:8081");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
