@@ -52,6 +52,7 @@ public class MemberController {
     }
 
     @PostMapping("/my-info")
+    @Operation(summary = "사용자 추가 정보 설정", description = "사용자의 추가 정보(소속, 직무, 이름)을 설정합니다.")
     public void saveAdditionalInfo(@RequestBody MemberDto memberDto, @AuthPrincipal ApiMember apiMember) {
         memberService.saveMemberAdditionalInfo(memberDto, apiMember);
     }
