@@ -34,6 +34,6 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return getUsername();
+        return oauth2Dto.getEmail();
     }
 }

@@ -42,6 +42,6 @@ public class Member extends BaseTimeEntity {
         return chatRooms.stream()
                 .filter(chatRoom -> chatRoom.getId().equals(roomId))
                 .findFirst()
-                .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_MEMBER));
+                .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_CHAT_ROOT));
     }
 }
