@@ -1,11 +1,10 @@
 package com.chzzk.cushion.chatroom.dto;
 
+import com.chzzk.cushion.chatroom.domain.Relationship;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Schema(description = "채팅방 목록 조회 응답")
@@ -28,10 +27,10 @@ public class ChatRoomResponse {
     private LocalDateTime lastUsedAt;
 
     @QueryProjection
-    public ChatRoomResponse(long roomId, String partnerName, String relationship, String lastMessage, LocalDateTime lastUsedAt) {
+    public ChatRoomResponse(long roomId, String partnerName, Relationship relationship, String lastMessage, LocalDateTime lastUsedAt) {
         this.roomId = roomId;
         this.partnerName = partnerName;
-        this.relationship = relationship;
+        this.relationship = relationship.getLabel();
         this.lastMessage = lastMessage;
         this.lastUsedAt = lastUsedAt;
     }

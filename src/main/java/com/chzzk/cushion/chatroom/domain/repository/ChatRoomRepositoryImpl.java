@@ -19,7 +19,7 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
     public List<ChatRoomResponse> findAllOrderByLastUsedAt() {
         return queryFactory
                 .select(new QChatRoomResponse(
-                        chatRoom.id, chatRoom.partnerName, chatRoom.partnerRel.stringValue(), message.content, chatRoom.lastUsedAt
+                        chatRoom.id, chatRoom.partnerName, chatRoom.partnerRel, message.content, chatRoom.lastUsedAt
                 ))
                 .from(chatRoom)
                 .join(message).on(chatRoom.id.eq(message.chatRoom.id))
