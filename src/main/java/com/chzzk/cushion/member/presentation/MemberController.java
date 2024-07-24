@@ -11,8 +11,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,5 +57,17 @@ public class MemberController {
     @Operation(summary = "사용자 추가 정보 설정", description = "사용자의 추가 정보(소속, 직무, 이름)을 설정합니다.")
     public void saveAdditionalInfo(@RequestBody MemberDto memberDto, @AuthPrincipal ApiMember apiMember) {
         memberService.saveMemberAdditionalInfo(memberDto, apiMember);
+    }
+
+    @PutMapping("/my-info")
+    @Operation(summary = "사용자 추가 정보 수정", description = "사용자의 추가 정보(소속, 직무, 이름)을 수정합니다.")
+    public void updateAdditionalInfo(@RequestBody MemberDto memberDto, @AuthPrincipal ApiMember apiMember) {
+        memberService.saveMemberAdditionalInfo(memberDto, apiMember);
+    }
+
+    @DeleteMapping
+    @Operation(summary = "회원 탈퇴", description = "회원 탈퇴를 진행합니다.")
+    public void deleteMember(@AuthPrincipal ApiMember apiMember) {
+        memberService.deleteMember(apiMember);
     }
 }
