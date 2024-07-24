@@ -41,6 +41,7 @@ public class ApiMemberArgumentResolver implements HandlerMethodArgumentResolver 
         String token = jwtTokenProvider.resolveToken(request);
         jwtTokenProvider.validateToken(token);
         String email = jwtTokenProvider.getPayload(token);
+        log.debug("Resolved email from token: {}", email);
 
         return new ApiMember(email);
     }
