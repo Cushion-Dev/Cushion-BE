@@ -25,6 +25,9 @@ public class ChatRoom extends BaseTimeEntity {
     private Member member;
 
     @NotBlank
+    String title;
+
+    @NotBlank
     @Size(max = 15)
     private String partnerName;
 
