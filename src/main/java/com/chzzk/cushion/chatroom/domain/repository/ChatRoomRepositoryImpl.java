@@ -27,4 +27,17 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
                 .orderBy(chatRoom.lastUsedAt.desc())
                 .fetch();
     }
+
+    @Override
+    public List<ChatRoomResponse> searchByTitle(String query) {
+        return queryFactory
+                .select(new QChatRoomResponse(
+                        chatRoom.id, chatRoom.partnerName, chatRoom.partnerRel, message.content, chatRoom.lastUsedAt
+                ))
+                .from(chatRoom)
+                .join(message).on(chatRoom.id.eq(message.chatRoom.id))
+                .where(chatRoom.lastUsedAt.eq(message.createdAt), chatRoom.title.contains(query))
+                .orderBy(chatRoom.lastUsedAt.desc())
+                .fetch();
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface ChatRoomRepositoryCustom {
 
     List<ChatRoomResponse> findAllOrderByLastUsedAt();
+
+    List<ChatRoomResponse> searchByTitle(String query);
 }
