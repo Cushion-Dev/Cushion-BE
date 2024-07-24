@@ -46,6 +46,15 @@ spring:
       access-expiration-time: 1800000     # 30분
       refresh-expiration-time: 604800000   # 7일
 
+ncp:
+  clova:
+    studio:
+      apiUrl: https://clovastudio.stream.ntruss.com/testapp/v1/chat-completions/HCX-003
+      apiKey: NTA0MjU2MWZlZTcxNDJiY7pPd+orksyO1xg/bSt21ETuPj9PtozFgOhLQ61GWxOV
+      apiKeyPrimaryVal: 0tlrvnyZ2hx8XxB7cKTNOMy93v21ZxQtxMYOEEFU
+      requestId: ce8edcbc-3520-47f2-8b7e-9667457dc114
+
+
 logging:
     level:
       org.hibernate.SQL: debug
