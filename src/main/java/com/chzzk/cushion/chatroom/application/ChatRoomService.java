@@ -1,9 +1,11 @@
 package com.chzzk.cushion.chatroom.application;
 
+import com.chzzk.cushion.chatroom.domain.repository.ChatRoomRepository;
 import com.chzzk.cushion.chatroom.domain.SenderType;
 import com.chzzk.cushion.chatroom.dto.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,11 +13,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ChatRoomService {
+
+    private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
     public void create() {
 
+    }
+
+    public List<ChatRoomResponse> findAll() {
+        return chatRoomRepository.findAllOrderByLastUsedAt();
     }
 
     @Transactional
@@ -26,12 +35,6 @@ public class ChatRoomService {
     @Transactional
     public void update() {
 
-    }
-
-    public List<ChatRoomResponse> findAll() {
-        ChatRoomResponse r1 = new ChatRoomResponse(1L, "한상훈", "동료", "그렇군요! 그러면 제가 ...", LocalDate.of(2024, 1, 25));
-        ChatRoomResponse r2 = new ChatRoomResponse(1L, "김철수", "상사", "오전에 주신 업무 다 완료했습니다! ...", LocalDate.of(2024, 5, 2));
-        return List.of(r1, r2);
     }
 
     public ChatRoomDetailResponse findById() {

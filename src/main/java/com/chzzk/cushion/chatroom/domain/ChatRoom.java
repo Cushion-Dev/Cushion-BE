@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +25,17 @@ public class ChatRoom extends BaseTimeEntity {
     private Member member;
 
     @NotBlank
+    String title;
+
+    @NotBlank
     @Size(max = 15)
     private String partnerName;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Relationship partnerRel;
+
+    private LocalDateTime lastUsedAt;
 
     @OneToMany(mappedBy = "chatRoom")
     private List<Message> messages = new ArrayList<>();
