@@ -2,6 +2,8 @@ package com.chzzk.cushion.member.domain;
 
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.global.common.BaseTimeEntity;
+import com.chzzk.cushion.global.exception.CushionException;
+import com.chzzk.cushion.global.exception.ErrorCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -35,4 +37,11 @@ public class Member extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "member")
     private List<ChatRoom> chatRooms = new ArrayList<>();
+
+    public ChatRoom findChatRoomById(long roomId) {
+        return chatRooms.stream()
+                .filter(chatRoom -> chatRoom.getId().equals(roomId))
+                .findFirst()
+                .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_MEMBER));
+    }
 }
