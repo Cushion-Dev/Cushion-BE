@@ -1,5 +1,7 @@
 package com.chzzk.cushion.style.presentation;
 
+import com.chzzk.cushion.global.utils.AuthPrincipal;
+import com.chzzk.cushion.member.dto.ApiMember;
 import com.chzzk.cushion.style.application.ChangeStyleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +21,9 @@ public class ChangeStyleController {
 
     @Operation(summary = "문체 변환", description = "문체를 변환합니다.")
     @GetMapping
-    public String changeStyle(@RequestParam String message) { // TODO 회원 dto 추가
-        return changeStyleService.changeStyle(message);
+    public String changeStyle(@AuthPrincipal ApiMember apiMember,
+                              @RequestParam Long roomId,
+                              @RequestParam String message) {
+        return changeStyleService.changeStyle(apiMember, roomId, message);
     }
 }

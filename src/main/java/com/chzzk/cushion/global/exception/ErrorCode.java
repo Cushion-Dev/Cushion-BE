@@ -28,6 +28,7 @@ public enum ErrorCode {
 
     // 404
     NOT_FOUND_MEMBER(NOT_FOUND, "존재하지 않는 회원입니다."),
+    NOT_FOUND_CHAT_ROOT(NOT_FOUND, "존재하지 않는 채팅방입니다."),
 
 
     // 409
