@@ -1,14 +1,15 @@
 package com.chzzk.cushion.chatroom.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Schema(description = "채팅방 목록 조회 응답")
 @Data
-@AllArgsConstructor
 public class ChatRoomResponse {
 
     @Schema(description = "채팅방 ID", example = "1")
@@ -24,5 +25,14 @@ public class ChatRoomResponse {
     private String lastMessage;
 
     @Schema(description = "최근 이용일", example = "2024/04/16")
-    private LocalDate lastUsedDate;
+    private LocalDateTime lastUsedAt;
+
+    @QueryProjection
+    public ChatRoomResponse(long roomId, String partnerName, String relationship, String lastMessage, LocalDateTime lastUsedAt) {
+        this.roomId = roomId;
+        this.partnerName = partnerName;
+        this.relationship = relationship;
+        this.lastMessage = lastMessage;
+        this.lastUsedAt = lastUsedAt;
+    }
 }
