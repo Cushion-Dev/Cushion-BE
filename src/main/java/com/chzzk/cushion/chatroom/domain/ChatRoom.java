@@ -54,4 +54,10 @@ public class ChatRoom extends BaseTimeEntity {
     public void updateLastUsedAt(LocalDateTime lastUsedAt) {
         this.lastUsedAt = lastUsedAt;
     }
+
+    public void updateInfo(String partnerName, Relationship partnerRel) {
+        this.partnerName = partnerName;
+        this.partnerRel = partnerRel;
+        this.title = partnerName + "(" + partnerRel + ")" + "님과의 쿠션";
+    }
 }
