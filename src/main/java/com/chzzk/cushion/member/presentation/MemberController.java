@@ -5,6 +5,7 @@ import com.chzzk.cushion.member.application.MemberService;
 import com.chzzk.cushion.member.dto.ApiMember;
 import com.chzzk.cushion.member.dto.MemberDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -55,19 +56,19 @@ public class MemberController {
 
     @PostMapping("/my-info")
     @Operation(summary = "사용자 추가 정보 설정", description = "사용자의 추가 정보(소속, 직무, 이름)을 설정합니다.")
-    public void saveAdditionalInfo(@RequestBody MemberDto memberDto, @AuthPrincipal ApiMember apiMember) {
+    public void saveAdditionalInfo(@RequestBody MemberDto memberDto, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         memberService.saveMemberAdditionalInfo(memberDto, apiMember);
     }
 
     @PutMapping("/my-info")
     @Operation(summary = "사용자 추가 정보 수정", description = "사용자의 추가 정보(소속, 직무, 이름)을 수정합니다.")
-    public void updateAdditionalInfo(@RequestBody MemberDto memberDto, @AuthPrincipal ApiMember apiMember) {
+    public void updateAdditionalInfo(@RequestBody MemberDto memberDto, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         memberService.saveMemberAdditionalInfo(memberDto, apiMember);
     }
 
     @DeleteMapping
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴를 진행합니다.")
-    public void deleteMember(@AuthPrincipal ApiMember apiMember) {
+    public void deleteMember(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         memberService.deleteMember(apiMember);
     }
 }

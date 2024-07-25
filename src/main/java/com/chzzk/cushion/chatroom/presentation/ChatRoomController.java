@@ -26,7 +26,8 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성합니다.")
     @PostMapping
-    public void createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest, @AuthPrincipal ApiMember apiMember) {
+    public void createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
+                               @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         chatRoomService.create(chatRoomCreateRequest, apiMember);
     }
 
@@ -51,7 +52,7 @@ public class ChatRoomController {
     @Operation(summary = "채팅방 삭제", description = "채팅방을 삭제합니다.")
     @PostMapping("/delete")
     public void deleteChatRoom(@RequestBody ChatRoomDeleteRequest chatRoomDeleteRequest,
-                               @AuthPrincipal ApiMember apiMember) { // TODO 회원 dto 추가
+                               @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) { // TODO 회원 dto 추가
         chatRoomService.delete(chatRoomDeleteRequest, apiMember);
     }
 }
