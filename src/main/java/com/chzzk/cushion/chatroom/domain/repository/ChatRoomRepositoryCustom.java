@@ -9,5 +9,5 @@ public interface ChatRoomRepositoryCustom {
 
     List<ChatRoomResponse> findAllOrderByLastUsedAt(Member member);
 
-    List<ChatRoomResponse> searchByTitle(String query);
+    List<ChatRoomResponse> searchByTitle(Member member, String query);
 }

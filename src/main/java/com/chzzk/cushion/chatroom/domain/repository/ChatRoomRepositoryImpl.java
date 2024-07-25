@@ -30,14 +30,16 @@ public class ChatRoomRepositoryImpl implements ChatRoomRepositoryCustom {
     }
 
     @Override
-    public List<ChatRoomResponse> searchByTitle(String query) {
+    public List<ChatRoomResponse> searchByTitle(Member member, String query) {
         return queryFactory
                 .select(new QChatRoomResponse(
                         chatRoom.id, chatRoom.partnerName, chatRoom.partnerRel, message.content, chatRoom.lastUsedAt
                 ))
                 .from(chatRoom)
                 .join(message).on(chatRoom.id.eq(message.chatRoom.id))
-                .where(chatRoom.lastUsedAt.eq(message.createdAt), chatRoom.title.contains(query))
+                .where(chatRoom.member.id.eq(member.getId()),
+                        chatRoom.lastUsedAt.eq(message.createdAt),
+                        chatRoom.title.contains(query))
                 .orderBy(chatRoom.lastUsedAt.desc())
                 .fetch();
     }
