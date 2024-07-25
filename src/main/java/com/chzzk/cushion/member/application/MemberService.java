@@ -39,6 +39,11 @@ public class MemberService {
         member.updateAdditionalInfo(memberDto.getAffiliation(), memberDto.getJob(), memberDto.getRealName());
     }
 
+    public void deleteMember(ApiMember apiMember) {
+        Member member = apiMember.toMember(memberRepository);
+        memberRepository.delete(member);
+    }
+
     private void clearCookies(HttpServletRequest request, HttpServletResponse response) {
         for (Cookie cookie : request.getCookies()) {
             cookie.setValue("");
