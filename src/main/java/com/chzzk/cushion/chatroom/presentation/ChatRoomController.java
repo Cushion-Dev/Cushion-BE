@@ -33,8 +33,8 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 목록 조회", description = "채팅방 목록을 조회합니다.")
     @GetMapping
-    public List<ChatRoomResponse> findAllChatRooms() {
-        return chatRoomService.findAll();
+    public List<ChatRoomResponse> findAllChatRooms(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+        return chatRoomService.findAll(apiMember);
     }
 
     @Operation(summary = "채팅방 상세 조회", description = "채팅방 상세 페이지를 조회합니다.")

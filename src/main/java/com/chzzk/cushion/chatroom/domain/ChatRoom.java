@@ -50,4 +50,8 @@ public class ChatRoom extends BaseTimeEntity {
     public void addMessage(Message message) {
         this.messages.add(message);
     }
+
+    public void updateLastUsedAt(LocalDateTime lastUsedAt) {
+        this.lastUsedAt = lastUsedAt;
+    }
 }
