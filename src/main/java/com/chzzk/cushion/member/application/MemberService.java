@@ -23,6 +23,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
         if (authentication != null) {
@@ -33,12 +34,14 @@ public class MemberService {
         return new RedirectView("/"); // 로그아웃 후 리디렉션할 URL
     }
 
+    @Transactional
     public void saveMemberAdditionalInfo(MemberDto memberDto, ApiMember apiMember) {
         Member member = apiMember.toMember(memberRepository);
 
         member.updateAdditionalInfo(memberDto.getAffiliation(), memberDto.getJob(), memberDto.getRealName());
     }
 
+    @Transactional
     public void deleteMember(ApiMember apiMember) {
         Member member = apiMember.toMember(memberRepository);
         memberRepository.delete(member);
