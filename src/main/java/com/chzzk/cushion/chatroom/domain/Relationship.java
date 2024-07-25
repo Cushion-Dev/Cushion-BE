@@ -1,5 +1,10 @@
 package com.chzzk.cushion.chatroom.domain;
 
+import static com.chzzk.cushion.global.exception.ErrorCode.INVALID_RELATIONSHIP;
+
+import com.chzzk.cushion.global.exception.CushionException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -18,5 +23,20 @@ public enum Relationship {
 
     Relationship(String label) {
         this.label = label;
+    }
+
+    @JsonCreator
+    public static Relationship from(String value) {
+        for (Relationship relationship : Relationship.values()) {
+            if (relationship.name().equals(value)) {
+                return relationship;
+            }
+        }
+        throw new CushionException(INVALID_RELATIONSHIP);
+    }
+
+    @JsonValue
+    public String toValue() {
+        return this.name();
     }
 }

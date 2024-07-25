@@ -13,6 +13,7 @@ public enum ErrorCode {
     // 400
     FILE_SIZE_EXCEEDED(BAD_REQUEST, "파일 크기가 초과되었습니다."),
     EMPTY_JWT_TOKEN(BAD_REQUEST, "토큰 값이 존재하지 않습니다."),
+    INVALID_RELATIONSHIP(BAD_REQUEST, "잘못된 관계 입력입니다."),
 
     // 401
     MISMATCHED_EMAIL_OR_PASSWORD(UNAUTHORIZED, "이메일 또는 비밀번호가 잘못되었습니다."),

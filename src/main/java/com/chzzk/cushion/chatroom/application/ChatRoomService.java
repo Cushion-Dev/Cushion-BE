@@ -26,7 +26,9 @@ public class ChatRoomService {
 
     @Transactional
     public void create(ChatRoomRequest chatRoomRequest, ApiMember apiMember) {
+        // 멤버 검증
         Member member = apiMember.toMember(memberRepository);
+
         String chatRoomTitle = chatRoomRequest.getPartnerName() + "(" + chatRoomRequest.getPartnerRel().getLabel() + ")" + "님과의 쿠션";
         ChatRoom chatRoom = chatRoomRequest.toEntity(member, chatRoomTitle);
 
