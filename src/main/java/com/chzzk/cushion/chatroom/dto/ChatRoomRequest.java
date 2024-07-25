@@ -42,4 +42,17 @@ public class ChatRoomRequest {
         private List<Long> chatRoomIds;
 
     }
+
+    @Schema(description = "채팅방 수정 요청")
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ChatRoomUpdateRequest {
+
+        @Schema(description = "수정할 상대방 이름", example = "김철수")
+        private String partnerName;
+
+        @Schema(description = "수정할 상대방 관계", example = "FRIEND")
+        private Relationship partnerRel;
+    }
 }
