@@ -4,6 +4,7 @@ import com.chzzk.cushion.global.utils.AuthPrincipal;
 import com.chzzk.cushion.member.dto.ApiMember;
 import com.chzzk.cushion.style.application.ChangeStyleService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,8 @@ public class ChangeStyleController {
 
     @Operation(summary = "문체 변환", description = "문체를 변환합니다.")
     @GetMapping
-    public String changeStyle(@AuthPrincipal ApiMember apiMember,
-                              @RequestParam Long roomId,
-                              @RequestParam String message) {
+    public String changeStyle(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
+                              @RequestParam Long roomId, @RequestParam String message) {
         return changeStyleService.changeStyle(apiMember, roomId, message);
     }
 }
