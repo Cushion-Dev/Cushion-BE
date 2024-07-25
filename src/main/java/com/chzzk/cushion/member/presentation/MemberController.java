@@ -1,6 +1,9 @@
 package com.chzzk.cushion.member.presentation;
 
+import com.chzzk.cushion.global.utils.AuthPrincipal;
 import com.chzzk.cushion.member.application.MemberService;
+import com.chzzk.cushion.member.dto.ApiMember;
+import com.chzzk.cushion.member.dto.MemberDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
@@ -45,5 +49,11 @@ public class MemberController {
     @Operation(summary = "로그아웃", description = "소셜 로그인한 계정을 로그아웃합니다.")
     public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         return memberService.logout(request, response, authentication);
+    }
+
+    @PostMapping("/my-info")
+    @Operation(summary = "사용자 추가 정보 설정", description = "사용자의 추가 정보(소속, 직무, 이름)을 설정합니다.")
+    public void saveAdditionalInfo(@RequestBody MemberDto memberDto, @AuthPrincipal ApiMember apiMember) {
+        memberService.saveMemberAdditionalInfo(memberDto, apiMember);
     }
 }

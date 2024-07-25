@@ -1,5 +1,9 @@
 package com.chzzk.cushion.member.application;
 
+import com.chzzk.cushion.member.domain.Member;
+import com.chzzk.cushion.member.domain.MemberRepository;
+import com.chzzk.cushion.member.dto.ApiMember;
+import com.chzzk.cushion.member.dto.MemberDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,6 +21,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequiredArgsConstructor
 public class MemberService {
 
+    private final MemberRepository memberRepository;
+
     public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
         if (authentication != null) {
@@ -25,6 +31,12 @@ public class MemberService {
 
         clearCookies(request, response);
         return new RedirectView("/"); // 로그아웃 후 리디렉션할 URL
+    }
+
+    public void saveMemberAdditionalInfo(MemberDto memberDto, ApiMember apiMember) {
+        Member member = apiMember.toMember(memberRepository);
+
+        member.updateAdditionalInfo(memberDto.getAffiliation(), memberDto.getJob(), memberDto.getRealName());
     }
 
     private void clearCookies(HttpServletRequest request, HttpServletResponse response) {
