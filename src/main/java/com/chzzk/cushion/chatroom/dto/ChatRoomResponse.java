@@ -3,10 +3,12 @@ package com.chzzk.cushion.chatroom.dto;
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.Relationship;
+import com.chzzk.cushion.chatroom.dto.MessageDto.MessageResponse;
 import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 
 @Schema(description = "채팅방 목록 조회 응답")
 @Data
-public class ChatRoomResponse {
+public class ChatRoomResponse { // TODO : DTO 통합
 
     @Schema(description = "채팅방 ID", example = "1")
     private long roomId;
@@ -54,7 +56,7 @@ public class ChatRoomResponse {
         private String relationship;
 
         @Schema(description = "메시지 목록")
-        private List<Message> messages;
+        private List<MessageResponse> messages;
 
         @Schema(description = "채팅방 생성일", example = "2024/05/30")
         private LocalDate createdAt;
@@ -66,7 +68,9 @@ public class ChatRoomResponse {
             return ChatRoomDetailResponse.builder()
                     .partnerName(chatRoom.getPartnerName())
                     .relationship(chatRoom.getPartnerRel().getLabel())
-                    .messages(messages)
+                    .messages(messages.stream()
+                            .map(MessageResponse::fromEntity)
+                            .collect(Collectors.toList()))
                     .createdAt(chatRoom.getCreatedAt() == null ? null : chatRoom.getCreatedAt().toLocalDate())
                     .lastUsedAt(chatRoom.getLastUsedAt() == null ? null : chatRoom.getLastUsedAt().toLocalDate())
                     .build();
