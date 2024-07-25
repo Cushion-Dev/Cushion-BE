@@ -37,6 +37,7 @@ public class ChatRoomService {
         chatRoomRepository.save(chatRoom);
     }
 
+    @Transactional(readOnly = true)
     public List<ChatRoomResponse> findAll(ApiMember apiMember) {
         Member member = apiMember.toMember(memberRepository);
         return chatRoomRepository.findAllOrderByLastUsedAt(member);
@@ -61,7 +62,7 @@ public class ChatRoomService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ChatRoomDetailResponse findById(Long roomId, ApiMember apiMember) {
         // 멤버 검증
         Member member = apiMember.toMember(memberRepository);
