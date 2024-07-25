@@ -200,9 +200,17 @@ public class ChangeStyleService {
         requestData.put("seed", 0);
 
         String resultMessage = clovaStudioApiExecutor.execute(requestData);
-        messageRepository.save(createMessageEntity(chatRoom, resultMessage));
+        Message messageEntity = saveMessage(chatRoom, resultMessage);
+        chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
 
         return resultMessage;
+    }
+
+    private Message saveMessage(ChatRoom chatRoom, String resultMessage) {
+        Message messageEntity = createMessageEntity(chatRoom, resultMessage);
+        messageRepository.save(messageEntity);
+        messageRepository.flush();
+        return messageEntity;
     }
 
     private Message createMessageEntity(ChatRoom chatRoom, String content) {
