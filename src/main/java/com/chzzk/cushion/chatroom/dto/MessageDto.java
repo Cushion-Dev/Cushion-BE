@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 
 public class MessageDto {
 
+    @Data
+    @AllArgsConstructor
     @NoArgsConstructor
     @Builder
     @Schema(description = "메시지 저장 요청")
