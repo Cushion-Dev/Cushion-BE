@@ -1,6 +1,7 @@
 package com.chzzk.cushion.chatroom.presentation;
 
 import com.chzzk.cushion.chatroom.application.ChatRoomService;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomUpdateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
@@ -47,8 +48,9 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 수정", description = "채팅방에 대한 정보를 수정합니다.")
     @PutMapping("/{roomId}")
-    public void updateChatRoom(@PathVariable long roomId, @RequestBody ChatRoomRequest request) {
-        chatRoomService.update();
+    public void updateChatRoom(@PathVariable long roomId, @RequestBody ChatRoomUpdateRequest chatRoomUpdateRequest,
+                               @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+        chatRoomService.update(chatRoomUpdateRequest, roomId, apiMember);
     }
 
     @Operation(summary = "채팅방 삭제", description = "채팅방을 삭제합니다.")
