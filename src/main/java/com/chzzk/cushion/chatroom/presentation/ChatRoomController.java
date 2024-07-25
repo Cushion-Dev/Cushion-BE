@@ -4,6 +4,8 @@ import com.chzzk.cushion.chatroom.application.ChatRoomService;
 import com.chzzk.cushion.chatroom.dto.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
+import com.chzzk.cushion.global.utils.AuthPrincipal;
+import com.chzzk.cushion.member.dto.ApiMember;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +23,8 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성합니다.")
     @PostMapping
-    public void createChatRoom(@RequestBody ChatRoomRequest request) {
-        chatRoomService.create();
+    public void createChatRoom(@RequestBody ChatRoomRequest chatRoomRequest, @AuthPrincipal ApiMember apiMember) {
+        chatRoomService.create(chatRoomRequest, apiMember);
     }
 
     @Operation(summary = "채팅방 목록 조회", description = "채팅방 목록을 조회합니다.")

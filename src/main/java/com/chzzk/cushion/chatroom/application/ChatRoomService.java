@@ -1,10 +1,15 @@
 package com.chzzk.cushion.chatroom.application;
 
+import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.repository.ChatRoomRepository;
 import com.chzzk.cushion.chatroom.domain.SenderType;
 import com.chzzk.cushion.chatroom.dto.ChatRoomDetailResponse;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto;
+import com.chzzk.cushion.member.domain.Member;
+import com.chzzk.cushion.member.domain.MemberRepository;
+import com.chzzk.cushion.member.dto.ApiMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +22,17 @@ import java.util.List;
 public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
-    public void create() {
+    public void create(ChatRoomRequest chatRoomRequest, ApiMember apiMember) {
+        // 멤버 검증
+        Member member = apiMember.toMember(memberRepository);
 
+        String chatRoomTitle = chatRoomRequest.getPartnerName() + "(" + chatRoomRequest.getPartnerRel().getLabel() + ")" + "님과의 쿠션";
+        ChatRoom chatRoom = chatRoomRequest.toEntity(member, chatRoomTitle);
+
+        chatRoomRepository.save(chatRoom);
     }
 
     public List<ChatRoomResponse> findAll() {
