@@ -5,11 +5,13 @@ import static com.chzzk.cushion.global.exception.ErrorCode.NOT_FOUND_CHAT_ROOM_T
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.repository.ChatRoomRepository;
+import com.chzzk.cushion.chatroom.domain.repository.MessageRepository;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomUpdateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
+import com.chzzk.cushion.chatroom.dto.MessageDto.MessageRequest;
 import com.chzzk.cushion.global.exception.CushionException;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
@@ -26,6 +28,7 @@ public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final MemberRepository memberRepository;
+    private final MessageRepository messageRepository;
 
     @Transactional
     public void create(ChatRoomCreateRequest chatRoomCreateRequest, ApiMember apiMember) {
@@ -82,5 +85,16 @@ public class ChatRoomService {
 
         return ChatRoomDetailResponse.fromEntity(chatRoom, messages);
 
+    }
+
+    @Transactional
+    public void saveMessage(MessageRequest messageRequest, Long roomId, ApiMember apiMember) {
+        Member member = apiMember.toMember(memberRepository);
+        ChatRoom chatRoom = chatRoomRepository.findByIdAndMember(roomId, member)
+                        .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
+
+        Message message = messageRequest.toEntity(chatRoom);
+        messageRepository.save(message);
+        chatRoom.updateLastUsedAt(message.getCreatedAt());
     }
 }
