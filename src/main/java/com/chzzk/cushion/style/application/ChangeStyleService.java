@@ -224,7 +224,6 @@ public class ChangeStyleService {
     private Message saveUserMessage(ChatRoom chatRoom, String resultMessage) {
         Message messageEntity = createUserMessageEntity(chatRoom, resultMessage);
         messageRepository.save(messageEntity);
-        messageRepository.flush();
         return messageEntity;
     }
 
