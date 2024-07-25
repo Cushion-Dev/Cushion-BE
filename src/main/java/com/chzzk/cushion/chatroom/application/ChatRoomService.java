@@ -65,7 +65,6 @@ public class ChatRoomService {
     public void update(ChatRoomUpdateRequest chatRoomUpdateRequest, Long roomId, ApiMember apiMember) {
 
         Member member = apiMember.toMember(memberRepository);
-
         ChatRoom chatRoom = chatRoomRepository.findByIdAndMember(roomId, member)
                 .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
 
