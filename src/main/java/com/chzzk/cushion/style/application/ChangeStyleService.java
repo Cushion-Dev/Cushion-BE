@@ -3,6 +3,7 @@ package com.chzzk.cushion.style.application;
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.SenderType;
+import com.chzzk.cushion.chatroom.domain.repository.MessageRepository;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,9 +20,11 @@ public class ChangeStyleService {
 
     private final ClovaStudioApiExecutor clovaStudioApiExecutor;
     private final MemberRepository memberRepository;
+    private final MessageRepository messageRepository;
 
+    @Transactional
     public String changeStyle(ApiMember apiMember, long roomId, String userMessage) {
-        String systemMessage = "- 당신의 역할은 사용자의 문체를 부드럽고 정중하게 변환해주는 것입니다. \n" +
+        String promptSystemMessage = "- 당신의 역할은 사용자의 문체를 부드럽고 정중하게 변환해주는 것입니다. \n" +
                 "- 사용자가 입력한 문장의 의도와 맥락을 정확히 파악하여 최대한 가깝게 전달해야 합니다.\n" +
                 "- 어떻게 말해야 할지 어려워하는 사용자를 돕기 위해 문체를 변환해주세요.\n" +
                 "- 사용자가 실제 대화할 상대방의 성향과 관계를 고려하여 적절한 문체로 변환해 주세요.\n" +
@@ -174,11 +178,11 @@ public class ChangeStyleService {
 
         JSONObject system = new JSONObject();
         system.put("role", "system");
-        system.put("content", systemMessage);
+        system.put("content", promptSystemMessage);
 
         JSONObject user = new JSONObject();
         user.put("role", "user");
-        user.put("content", userMessage);
+        user.put("content", createPromptUserMessage(member, chatRoom, userMessage));
 
         JSONArray presetText = new JSONArray();
         presetText.add(system);
@@ -196,16 +200,37 @@ public class ChangeStyleService {
         requestData.put("seed", 0);
 
         String resultMessage = clovaStudioApiExecutor.execute(requestData);
-        chatRoom.addMessage(createMessageEntity(chatRoom, resultMessage));
+        Message messageEntity = saveMessage(chatRoom, resultMessage);
+        chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
 
         return resultMessage;
     }
 
+    private String createPromptUserMessage(Member member, ChatRoom chatRoom, String message) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("사용자 이름: ").append(member.getRealName()).append("\n");
+        sb.append("사용자 소속: ").append(member.getAffiliation()).append("\n");
+        sb.append("사용자 직무: ").append(member.getJob()).append("\n");
+        sb.append("상대방 이름: ").append(chatRoom.getPartnerName()).append("\n");
+        sb.append("상대방 관계: ").append(chatRoom.getPartnerRel().getLabel()).append("\n");
+        sb.append("문장: ").append(message).append("\n");
+        return sb.toString();
+    }
+
+    private Message saveMessage(ChatRoom chatRoom, String resultMessage) {
+        Message messageEntity = createMessageEntity(chatRoom, resultMessage);
+        messageRepository.save(messageEntity);
+        messageRepository.flush();
+        return messageEntity;
+    }
+
     private Message createMessageEntity(ChatRoom chatRoom, String content) {
-        return Message.builder()
+        Message message = Message.builder()
                 .chatRoom(chatRoom)
                 .content(content)
                 .senderType(SenderType.BOT)
                 .build();
+        chatRoom.addMessage(message);
+        return message;
     }
 }

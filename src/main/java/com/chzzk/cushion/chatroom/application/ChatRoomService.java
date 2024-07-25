@@ -42,8 +42,9 @@ public class ChatRoomService {
         chatRoomRepository.save(chatRoom);
     }
 
-    public List<ChatRoomResponse> findAll() {
-        return chatRoomRepository.findAllOrderByLastUsedAt();
+    public List<ChatRoomResponse> findAll(ApiMember apiMember) {
+        Member member = apiMember.toMember(memberRepository);
+        return chatRoomRepository.findAllOrderByLastUsedAt(member);
     }
 
     @Transactional
