@@ -1,13 +1,36 @@
 package com.chzzk.cushion.chatroom.dto;
 
+import static com.chzzk.cushion.chatroom.domain.SenderType.BOT;
+
+import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.SenderType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 public class MessageDto {
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    @Schema(description = "메시지 저장 요청")
+    public static class MessageRequest {
+
+        @Schema(description = "서버에 저장될 메시지 내용", example = "안녕하세요! 저는 지금부터 ‘홍길동(상사)’ 님의 입장에서 ...")
+        private String content;
+
+        public Message toEntity(ChatRoom chatRoom) {
+            return Message.builder()
+                    .chatRoom(chatRoom)
+                    .content(content)
+                    .senderType(BOT)
+                    .build();
+        }
+    }
 
     @Data
     @AllArgsConstructor

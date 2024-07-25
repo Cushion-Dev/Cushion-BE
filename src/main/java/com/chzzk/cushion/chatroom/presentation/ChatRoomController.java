@@ -7,6 +7,7 @@ import com.chzzk.cushion.chatroom.dto.ChatRoomRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
+import com.chzzk.cushion.chatroom.dto.MessageDto.MessageRequest;
 import com.chzzk.cushion.global.utils.AuthPrincipal;
 import com.chzzk.cushion.member.dto.ApiMember;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,5 +59,12 @@ public class ChatRoomController {
     public void deleteChatRoom(@RequestBody ChatRoomDeleteRequest chatRoomDeleteRequest,
                                @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) { // TODO 회원 dto 추가
         chatRoomService.delete(chatRoomDeleteRequest, apiMember);
+    }
+
+    @Operation(summary = "메시지 저장", description = "채팅방에 메시지를 저장합니다.")
+    @PostMapping("/{roomId}/message")
+    public void saveMessage(@PathVariable Long roomId, @RequestBody MessageRequest messageRequest,
+                            @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+        chatRoomService.saveMessage(messageRequest, roomId, apiMember);
     }
 }

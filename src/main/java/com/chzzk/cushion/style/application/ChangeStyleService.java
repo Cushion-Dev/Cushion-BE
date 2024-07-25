@@ -1,5 +1,6 @@
 package com.chzzk.cushion.style.application;
 
+
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.SenderType;
@@ -24,6 +25,12 @@ public class ChangeStyleService {
 
     @Transactional
     public String changeStyle(ApiMember apiMember, long roomId, String userMessage) {
+        Member member = apiMember.toMember(memberRepository);
+        ChatRoom chatRoom = member.findChatRoomById(roomId);
+
+        // 사용자가 입력한 변환 전 메시지 저장
+        saveUserMessage(chatRoom, userMessage);
+
         String promptSystemMessage = "- 당신의 역할은 사용자의 문체를 부드럽고 정중하게 변환해주는 것입니다. \n" +
                 "- 사용자가 입력한 문장의 의도와 맥락을 정확히 파악하여 최대한 가깝게 전달해야 합니다.\n" +
                 "- 어떻게 말해야 할지 어려워하는 사용자를 돕기 위해 문체를 변환해주세요.\n" +
@@ -173,9 +180,6 @@ public class ChangeStyleService {
                 "문장: 썅년아 내 돈 언제 갚을거임 진짜 이번달 생활비 박살났다고..진짜 니년 믿는게 아니었는데 믿은 내가 빙시지.. 진짜 이 연락 무시하면 끝이디 바로 고소 갈긴다. 옛정 생각해서 고소 전에 연락이라도 넣어주는거니까 정신차리고 보면 바로 답장해라.\n" +
                 "변환: 주희야, 나 민경이야. 이번달 생활비를 내야하는데 아직 네게서 돈을 받지 못해 어려운 상황이야. 솔직히 네 사정 듣고, 또 우리 옛 추억 생각하며 믿고 빌려준 돈인데 이렇게 연락이 안되니 너무 실망스러워. 나도 상황이 상황인지라 돈을 받지 못하면 법적 절차를 밟게 될 것 같아. 연락 확인하면 바로 답장 부탁할게.\n";
 
-        Member member = apiMember.toMember(memberRepository);
-        ChatRoom chatRoom = member.findChatRoomById(roomId);
-
         JSONObject system = new JSONObject();
         system.put("role", "system");
         system.put("content", promptSystemMessage);
@@ -200,7 +204,7 @@ public class ChangeStyleService {
         requestData.put("seed", 0);
 
         String resultMessage = clovaStudioApiExecutor.execute(requestData);
-        Message messageEntity = saveMessage(chatRoom, resultMessage);
+        Message messageEntity = saveBotMessage(chatRoom, resultMessage);
         chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
 
         return resultMessage;
@@ -217,18 +221,34 @@ public class ChangeStyleService {
         return sb.toString();
     }
 
-    private Message saveMessage(ChatRoom chatRoom, String resultMessage) {
-        Message messageEntity = createMessageEntity(chatRoom, resultMessage);
+    private Message saveUserMessage(ChatRoom chatRoom, String resultMessage) {
+        Message messageEntity = createUserMessageEntity(chatRoom, resultMessage);
+        messageRepository.save(messageEntity);
+        return messageEntity;
+    }
+
+    private Message saveBotMessage(ChatRoom chatRoom, String resultMessage) {
+        Message messageEntity = createBotMessageEntity(chatRoom, resultMessage);
         messageRepository.save(messageEntity);
         messageRepository.flush();
         return messageEntity;
     }
 
-    private Message createMessageEntity(ChatRoom chatRoom, String content) {
+    private Message createBotMessageEntity(ChatRoom chatRoom, String content) {
         Message message = Message.builder()
                 .chatRoom(chatRoom)
                 .content(content)
                 .senderType(SenderType.BOT)
+                .build();
+        chatRoom.addMessage(message);
+        return message;
+    }
+
+    private Message createUserMessageEntity(ChatRoom chatRoom, String content) {
+        Message message = Message.builder()
+                .chatRoom(chatRoom)
+                .content(content)
+                .senderType(SenderType.USER)
                 .build();
         chatRoom.addMessage(message);
         return message;
