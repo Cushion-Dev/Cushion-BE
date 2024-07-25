@@ -4,7 +4,8 @@ import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.repository.ChatRoomRepository;
 import com.chzzk.cushion.chatroom.domain.SenderType;
 import com.chzzk.cushion.chatroom.dto.ChatRoomDetailResponse;
-import com.chzzk.cushion.chatroom.dto.ChatRoomRequest;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto;
 import com.chzzk.cushion.member.domain.Member;
@@ -25,12 +26,12 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void create(ChatRoomRequest chatRoomRequest, ApiMember apiMember) {
+    public void create(ChatRoomCreateRequest chatRoomCreateRequest, ApiMember apiMember) {
         // 멤버 검증
         Member member = apiMember.toMember(memberRepository);
 
-        String chatRoomTitle = chatRoomRequest.getPartnerName() + "(" + chatRoomRequest.getPartnerRel().getLabel() + ")" + "님과의 쿠션";
-        ChatRoom chatRoom = chatRoomRequest.toEntity(member, chatRoomTitle);
+        String chatRoomTitle = chatRoomCreateRequest.getPartnerName() + "(" + chatRoomCreateRequest.getPartnerRel().getLabel() + ")" + "님과의 쿠션";
+        ChatRoom chatRoom = chatRoomCreateRequest.toEntity(member, chatRoomTitle);
 
         chatRoomRepository.save(chatRoom);
     }
@@ -40,8 +41,11 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public void delete() {
+    public void delete(ChatRoomDeleteRequest chatRoomDeleteRequest, ApiMember apiMember) {
+        // 멤버 검증
+        Member member = apiMember.toMember(memberRepository);
 
+        chatRoomRepository.deleteByMemberAndIdIn(member, chatRoomDeleteRequest.getChatRoomIds());
     }
 
     @Transactional

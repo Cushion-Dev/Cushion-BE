@@ -3,6 +3,8 @@ package com.chzzk.cushion.chatroom.presentation;
 import com.chzzk.cushion.chatroom.application.ChatRoomService;
 import com.chzzk.cushion.chatroom.dto.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
 import com.chzzk.cushion.global.utils.AuthPrincipal;
 import com.chzzk.cushion.member.dto.ApiMember;
@@ -23,8 +25,8 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성합니다.")
     @PostMapping
-    public void createChatRoom(@RequestBody ChatRoomRequest chatRoomRequest, @AuthPrincipal ApiMember apiMember) {
-        chatRoomService.create(chatRoomRequest, apiMember);
+    public void createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest, @AuthPrincipal ApiMember apiMember) {
+        chatRoomService.create(chatRoomCreateRequest, apiMember);
     }
 
     @Operation(summary = "채팅방 목록 조회", description = "채팅방 목록을 조회합니다.")
@@ -46,8 +48,9 @@ public class ChatRoomController {
     }
 
     @Operation(summary = "채팅방 삭제", description = "채팅방을 삭제합니다.")
-    @DeleteMapping("/{roomId}")
-    public void deleteChatRoom(@PathVariable long roomId) { // TODO 회원 dto 추가
-        chatRoomService.delete();
+    @PostMapping("/delete")
+    public void deleteChatRoom(@RequestBody ChatRoomDeleteRequest chatRoomDeleteRequest,
+                               @AuthPrincipal ApiMember apiMember) { // TODO 회원 dto 추가
+        chatRoomService.delete(chatRoomDeleteRequest, apiMember);
     }
 }
