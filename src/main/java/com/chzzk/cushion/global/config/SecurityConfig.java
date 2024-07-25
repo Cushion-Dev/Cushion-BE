@@ -78,7 +78,8 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("http://223.130.132.182"); // 도메인 주소
         configuration.addAllowedOriginPattern("http://223.130.132.182:8080");
         configuration.addAllowedOriginPattern("http://223.130.132.182:8081");
-        configuration.addAllowedOriginPattern("http://223.130.132.182:6173");
+        configuration.addAllowedOriginPattern("http://223.130.132.182:5173");
+        configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
