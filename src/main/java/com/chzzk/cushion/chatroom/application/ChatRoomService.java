@@ -1,5 +1,7 @@
 package com.chzzk.cushion.chatroom.application;
 
+import static com.chzzk.cushion.global.exception.ErrorCode.NOT_FOUND_CHAT_ROOM_THAT_MEMBER;
+
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.repository.ChatRoomRepository;
 import com.chzzk.cushion.chatroom.domain.SenderType;
@@ -8,6 +10,7 @@ import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto;
+import com.chzzk.cushion.global.exception.CushionException;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
@@ -45,6 +48,12 @@ public class ChatRoomService {
         // 멤버 검증
         Member member = apiMember.toMember(memberRepository);
 
+        // 채팅방 존재 검증
+        List<Long> chatRoomIds = chatRoomDeleteRequest.getChatRoomIds();
+        for (Long chatRoomId : chatRoomIds) {
+            chatRoomRepository.findByIdAndMember(chatRoomId, member)
+                    .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
+        }
         chatRoomRepository.deleteByMemberAndIdIn(member, chatRoomDeleteRequest.getChatRoomIds());
     }
 
