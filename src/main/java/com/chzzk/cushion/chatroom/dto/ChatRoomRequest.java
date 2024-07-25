@@ -40,5 +40,6 @@ public class ChatRoomRequest {
 
         @Schema(description = "삭제할 채팅방 ID 목록", example = "[1, 2, 3]")
         private List<Long> chatRoomIds;
+
     }
 }
