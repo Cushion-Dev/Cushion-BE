@@ -31,7 +31,7 @@ public class ChatRoomResponse {
         this.roomId = roomId;
         this.partnerName = partnerName;
         this.relationship = relationship.getLabel();
-        this.lastMessage = lastMessage;
+        this.lastMessage = lastMessage.replace("\n", "");
         this.lastUsedAt = lastUsedAt;
     }
 }

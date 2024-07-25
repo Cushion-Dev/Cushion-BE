@@ -9,6 +9,7 @@ import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
 import com.chzzk.cushion.global.utils.AuthPrincipal;
 import com.chzzk.cushion.member.dto.ApiMember;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,8 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 목록 조회", description = "채팅방 목록을 조회합니다.")
     @GetMapping
-    public List<ChatRoomResponse> findAllChatRooms() {
-        return chatRoomService.findAll();
+    public List<ChatRoomResponse> findAllChatRooms(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+        return chatRoomService.findAll(apiMember);
     }
 
     @Operation(summary = "채팅방 상세 조회", description = "채팅방 상세 페이지를 조회합니다.")

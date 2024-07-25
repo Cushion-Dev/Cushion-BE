@@ -3,6 +3,7 @@ package com.chzzk.cushion.style.application;
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.SenderType;
+import com.chzzk.cushion.chatroom.domain.repository.MessageRepository;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +20,9 @@ public class ChangeStyleService {
 
     private final ClovaStudioApiExecutor clovaStudioApiExecutor;
     private final MemberRepository memberRepository;
+    private final MessageRepository messageRepository;
 
+    @Transactional
     public String changeStyle(ApiMember apiMember, long roomId, String userMessage) {
         String systemMessage = "- 당신의 역할은 사용자의 문체를 부드럽고 정중하게 변환해주는 것입니다. \n" +
                 "- 사용자가 입력한 문장의 의도와 맥락을 정확히 파악하여 최대한 가깝게 전달해야 합니다.\n" +
@@ -196,16 +200,18 @@ public class ChangeStyleService {
         requestData.put("seed", 0);
 
         String resultMessage = clovaStudioApiExecutor.execute(requestData);
-        chatRoom.addMessage(createMessageEntity(chatRoom, resultMessage));
+        messageRepository.save(createMessageEntity(chatRoom, resultMessage));
 
         return resultMessage;
     }
 
     private Message createMessageEntity(ChatRoom chatRoom, String content) {
-        return Message.builder()
+        Message message = Message.builder()
                 .chatRoom(chatRoom)
                 .content(content)
                 .senderType(SenderType.BOT)
                 .build();
+        chatRoom.addMessage(message);
+        return message;
     }
 }
