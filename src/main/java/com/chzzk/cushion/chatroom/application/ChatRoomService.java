@@ -5,6 +5,7 @@ import static com.chzzk.cushion.global.exception.ErrorCode.NOT_FOUND_CHAT_ROOM_T
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.repository.ChatRoomRepository;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomUpdateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
@@ -58,8 +59,14 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public void update() {
+    public void update(ChatRoomUpdateRequest chatRoomUpdateRequest, Long roomId, ApiMember apiMember) {
 
+        Member member = apiMember.toMember(memberRepository);
+
+        ChatRoom chatRoom = chatRoomRepository.findByIdAndMember(roomId, member)
+                .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
+
+        chatRoom.updateInfo(chatRoomUpdateRequest.getPartnerName(), chatRoomUpdateRequest.getPartnerRel());
     }
 
     @Transactional(readOnly = true)
