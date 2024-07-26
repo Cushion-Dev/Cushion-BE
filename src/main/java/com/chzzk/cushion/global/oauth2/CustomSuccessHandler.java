@@ -21,8 +21,11 @@ import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createCookie;
 @RequiredArgsConstructor
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Value("${oauth2.success.redirect-url}")
-    private String redirectUrl;
+    @Value("${oauth2.success.redirect-url-new}")
+    private String redirectUrlNewMember;
+
+    @Value("${oauth2.success.redirect-url-existing}")
+    private String redirectUrlExistingMember;
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
@@ -34,6 +37,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
 
         String username = customUserDetails.getUsername();
+        boolean isNew = customUserDetails.isNew();
 
         Member member = memberRepository.findByUsername(username);
         String accessToken = jwtTokenProvider.createAccessToken(authentication, member.getId());
@@ -42,6 +46,15 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addCookie(createCookie(refreshToken));
         response.addCookie(createAccessCookie(accessToken));
-        response.sendRedirect(redirectUrl);
+
+        // 만약 이미 존재하는 회원이라면 redirectUrl = localhost:3000/chat-list
+        // 만약 처음 가입하는 회원이라면 redirectUrl = localhost:3000/cushion
+        // 페이지가 열리면 사용자 추가 정보 POST 보냄 -> 채팅방 만들기 상대방 정보 받음 -> 채팅방 생성 누름 -> 방금 만든 채팅방으로 이동
+
+        if (isNew) {
+            response.sendRedirect(redirectUrlNewMember);
+        } else {
+            response.sendRedirect(redirectUrlExistingMember);
+        }
     }
 }

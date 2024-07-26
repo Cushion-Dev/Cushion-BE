@@ -31,7 +31,7 @@ public class ChatRoomService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public void create(ChatRoomCreateRequest chatRoomCreateRequest, ApiMember apiMember) {
+    public ChatRoomDetailResponse create(ChatRoomCreateRequest chatRoomCreateRequest, ApiMember apiMember) {
         // 멤버 검증
         Member member = apiMember.toMember(memberRepository);
 
@@ -39,6 +39,7 @@ public class ChatRoomService {
         ChatRoom chatRoom = chatRoomCreateRequest.toEntity(member, chatRoomTitle);
 
         chatRoomRepository.save(chatRoom);
+        return ChatRoomDetailResponse.fromEntity(chatRoom, chatRoom.getMessages());
     }
 
     @Transactional(readOnly = true)

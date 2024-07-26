@@ -39,6 +39,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String username = oauth2Response.getProvider() + " " + oauth2Response.getProviderId();
         Member findMember = memberRepository.findByUsername(username);
 
+        boolean isNew;
+
         if (findMember == null) {
             String encodedPassword = passwordEncoder().encode(OAUTH2_PASSWORD);
             Oauth2Dto oauth2Dto = Oauth2Dto.builder()
@@ -49,8 +51,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             Member newMember = oauth2Dto.toEntity();
             memberRepository.save(newMember);
+            isNew = true;
 
-            return new CustomOAuth2User(oauth2Dto);
+            return new CustomOAuth2User(oauth2Dto, isNew);
         }
 
         else { // 회원이 존재할 떄
@@ -58,7 +61,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     .email(findMember.getEmail())
                     .username(findMember.getUsername())
                     .build();
-            return new CustomOAuth2User(oauth2Dto);
+            isNew = false;
+
+            return new CustomOAuth2User(oauth2Dto, isNew);
         }
     }
 }
