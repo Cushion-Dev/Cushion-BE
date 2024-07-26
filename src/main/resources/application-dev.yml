@@ -31,4 +31,4 @@ logging:
 oauth2:
   success:
     redirect-url-new: http://localhost:3000/cushion
-    redirect-url-existing: http://localhost:3000/chat-list
+    redirect-url-existing: http://localhost:3000/chat-list/
