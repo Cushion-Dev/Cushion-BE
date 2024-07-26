@@ -1,5 +1,8 @@
 package com.chzzk.cushion.global.jwt;
 
+import static com.chzzk.cushion.global.exception.ErrorCode.INVALID_JWT_TOKEN;
+
+import com.chzzk.cushion.global.exception.CushionException;
 import com.chzzk.cushion.member.application.MyUserDetailService;
 import com.chzzk.cushion.member.domain.CustomUserDetails;
 import io.jsonwebtoken.*;
@@ -115,7 +118,7 @@ public class JwtTokenProvider {
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            return false;
+            throw new CushionException(INVALID_JWT_TOKEN);
         }
     }
 
