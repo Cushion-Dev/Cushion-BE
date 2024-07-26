@@ -32,7 +32,7 @@ public class ClovaStudioApiExecutor {
     @Value("${ncp.clova.studio.requestId}")
     private String requestId;
 
-    public String execute(JSONObject executeRequest) {
+    public String changeStyleDefault(JSONObject requestData) {
         try {
             StopWatch totalTime = start("total time");
 
@@ -40,7 +40,7 @@ public class ClovaStudioApiExecutor {
             StopWatch apiRequestStopWatch = start("api request time");
             URL url = new URL(apiUrl);
             HttpURLConnection connection = createRequestHeader(url);
-            request(connection, executeRequest);
+            request(connection, requestData);
             stop(apiRequestStopWatch);
 
             // API 응답 수신
@@ -50,7 +50,36 @@ public class ClovaStudioApiExecutor {
 
             // 데이터 파싱
             StopWatch dataParsingStopWatch = start("data parsing time");
-            String result = parseResponseData(responseData);
+            String result = parseResponseData(responseData, "변환: ");
+
+            stop(dataParsingStopWatch);
+
+            stop(totalTime);
+            return result;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String analyzeCharacteristics(JSONObject requestData) {
+        try {
+            StopWatch totalTime = start("total time");
+
+            // API 요청 전송
+            StopWatch apiRequestStopWatch = start("api request time");
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = createRequestHeader(url);
+            request(connection, requestData);
+            stop(apiRequestStopWatch);
+
+            // API 응답 수신
+            StopWatch apiResponseStopWatch = start("api response time");
+            String responseData = getResponseData(connection);
+            stop(apiResponseStopWatch);
+
+            // 데이터 파싱
+            StopWatch dataParsingStopWatch = start("data parsing time");
+            String result = parseResponseData(responseData, "상대방 성격 : ");
 
             stop(dataParsingStopWatch);
 
@@ -106,7 +135,7 @@ public class ClovaStudioApiExecutor {
         return new BufferedReader(new InputStreamReader(connection.getErrorStream()));
     }
 
-    private String parseResponseData(String responseData) throws JsonProcessingException {
+    private String parseResponseData(String responseData, String removeString) throws JsonProcessingException {
         log.info("response data = {}", responseData);
         ObjectMapper objectMapper = new ObjectMapper();
         String[] parts = responseData.split("id:");
@@ -123,8 +152,8 @@ public class ClovaStudioApiExecutor {
                     JsonNode messageNode = rootNode.get("message");
                     if (messageNode != null) {
                         String resultContent = messageNode.get("content").asText();
-                        String substring = resultContent.substring(0, 4);
-                        if (substring.equals("변환: ")) {
+                        String substring = resultContent.substring(0, removeString.length());
+                        if (substring.equals(removeString)) {
                             return resultContent.replace(substring, "");
                         }
                         return resultContent;

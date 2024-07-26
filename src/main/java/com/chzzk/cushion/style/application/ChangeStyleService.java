@@ -10,6 +10,7 @@ import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
 import com.chzzk.cushion.style.domain.ClovaApiRequestDataGenerator;
 import com.chzzk.cushion.style.domain.ClovaStudioApiExecutor;
+import com.chzzk.cushion.style.dto.ChangeStyleRequest;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -25,15 +26,16 @@ public class ChangeStyleService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public String changeStyle(ApiMember apiMember, long roomId, String userMessage) {
+    public String changeStyle(ApiMember apiMember, ChangeStyleRequest changeStyleRequest) {
         Member member = apiMember.toMember(memberRepository);
-        ChatRoom chatRoom = member.findChatRoomById(roomId);
+        ChatRoom chatRoom = member.findChatRoomById(changeStyleRequest.getRoomId());
 
         // 사용자가 입력한 변환 전 메시지 저장
-        saveUserMessage(chatRoom, userMessage);
+        saveUserMessage(chatRoom, changeStyleRequest.getUserMessage());
 
-        JSONObject requestData = clovaApiRequestDataGenerator.generateRequestData(member, userMessage, chatRoom);
-        String resultMessage = clovaStudioApiExecutor.execute(requestData);
+        JSONObject requestData = clovaApiRequestDataGenerator
+                .generateWithUserMessage(member, changeStyleRequest.getUserMessage(), chatRoom);
+        String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
         Message messageEntity = saveBotMessage(chatRoom, resultMessage);
         chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
