@@ -48,11 +48,17 @@ public class MemberService {
     }
 
     private void clearCookies(HttpServletRequest request, HttpServletResponse response) {
-        for (Cookie cookie : request.getCookies()) {
-            cookie.setValue("");
-            cookie.setPath("/");
-            cookie.setMaxAge(0);
-            response.addCookie(cookie);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                log.info("쿠키 이름: {}, 쿠키 값: {}", cookie.getName(), cookie.getValue());
+                cookie.setValue("");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        } else {
+            log.info("쿠키가 존재하지 않습니다.");
         }
     }
 }
