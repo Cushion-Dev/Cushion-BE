@@ -96,8 +96,10 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthenticationByToken(String token) {
-        String userPrincipal = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody().getSubject();
-        UserDetails userDetails = myUserDetailService.loadUserByUsername(userPrincipal);
+        Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+        String userPrincipal = claims.getSubject();
+        Long userId = getMemberId(token);
+        UserDetails userDetails = myUserDetailService.loadUserByIdAndUsername(userId, userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
@@ -142,5 +144,10 @@ public class JwtTokenProvider {
             return customUserDetails.getMemberId();
         }
         return null;
+    }
+
+    public Long getMemberId(String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+        return claims.get("memberId", Long.class);
     }
 }
