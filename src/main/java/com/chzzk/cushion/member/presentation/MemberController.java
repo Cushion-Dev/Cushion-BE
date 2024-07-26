@@ -48,7 +48,7 @@ public class MemberController {
         return new RedirectView("/oauth2/authorization/google");
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     @Operation(summary = "로그아웃", description = "소셜 로그인한 계정을 로그아웃합니다.")
     public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         return memberService.logout(request, response, authentication);
