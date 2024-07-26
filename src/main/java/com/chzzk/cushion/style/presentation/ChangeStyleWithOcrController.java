@@ -1,5 +1,7 @@
 package com.chzzk.cushion.style.presentation;
 
+import com.chzzk.cushion.global.utils.AuthPrincipal;
+import com.chzzk.cushion.member.dto.ApiMember;
 import com.chzzk.cushion.style.application.ChangeStyleWithOcrService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +18,10 @@ public class ChangeStyleWithOcrController {
 
     private final ChangeStyleWithOcrService changeStyleWithOcrService;
 
-    @PostMapping
-    public String changeStyleWithOrc(@RequestPart("file") List<MultipartFile> multipartFiles) {
-        return changeStyleWithOcrService.changeStyleWithOcr(null, multipartFiles);
+    @GetMapping
+    public String changeStyleWithOrc(@AuthPrincipal ApiMember apiMember,
+                                     @RequestParam Long roomId,
+                                     @RequestPart("file") List<MultipartFile> multipartFiles) {
+        return changeStyleWithOcrService.changeStyleWithOcr(apiMember, roomId, multipartFiles);
     }
 }
