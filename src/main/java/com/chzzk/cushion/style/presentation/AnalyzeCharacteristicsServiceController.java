@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "style", description = "문체 변환 API")
+@Tag(name = "clova", description = "CLOVA 관련 API")
 @RequestMapping("/characteristics")
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +21,7 @@ public class AnalyzeCharacteristicsServiceController {
 
     private final AnalyzeCharacteristicsService analyzeCharacteristicsService;
 
-    @Operation(summary = "OCR로 대화 내용 추출 및 성격 분석", description = "OCR을 이용해 이미지 속 텍스트를 추출하고, 성격을 분석합니다.")
+    @Operation(summary = "성격 분석", description = "OCR을 이용해 추출한 대화 내용으로 상대방의 성격을 분석합니다.")
     @PostMapping
     public String analyzeTendency(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
                                   @RequestBody AnalyzeCharacteristicsRequest analyzeCharacteristicsRequest) {
