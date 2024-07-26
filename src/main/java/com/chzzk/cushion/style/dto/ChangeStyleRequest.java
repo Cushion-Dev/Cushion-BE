@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@Schema(description = "문체 변환 요청")
 @Data
 @AllArgsConstructor
 public class ChangeStyleRequest {
