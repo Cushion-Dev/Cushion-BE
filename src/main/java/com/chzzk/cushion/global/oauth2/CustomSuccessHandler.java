@@ -47,10 +47,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createCookie(refreshToken));
         response.addCookie(createAccessCookie(accessToken));
 
-        // 만약 이미 존재하는 회원이라면 redirectUrl = localhost:3000/chat-list
-        // 만약 처음 가입하는 회원이라면 redirectUrl = localhost:3000/cushion
-        // 페이지가 열리면 사용자 추가 정보 POST 보냄 -> 채팅방 만들기 상대방 정보 받음 -> 채팅방 생성 누름 -> 방금 만든 채팅방으로 이동
-
         if (isNew) {
             response.sendRedirect(redirectUrlNewMember);
         } else {
