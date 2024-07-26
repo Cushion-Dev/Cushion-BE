@@ -12,6 +12,7 @@ import java.util.Map;
 public class CustomOAuth2User implements OAuth2User {
 
     private final Oauth2Dto oauth2Dto;
+    private final boolean isNew;
 
     @Override
     public <A> A getAttribute(String name) {
@@ -35,5 +36,9 @@ public class CustomOAuth2User implements OAuth2User {
     @Override
     public String getName() {
         return oauth2Dto.getEmail();
+    }
+
+    public boolean isNew() {
+        return isNew;
     }
 }
