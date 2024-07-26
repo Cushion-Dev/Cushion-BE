@@ -122,7 +122,12 @@ public class ClovaStudioApiExecutor {
                     JsonNode rootNode = objectMapper.readTree(data);
                     JsonNode messageNode = rootNode.get("message");
                     if (messageNode != null) {
-                        return messageNode.get("content").asText();
+                        String resultContent = messageNode.get("content").asText();
+                        String substring = resultContent.substring(0, 4);
+                        if (substring.equals("변환: ")) {
+                            return resultContent.replace(substring, "");
+                        }
+                        return resultContent;
                     }
                 }
             }
