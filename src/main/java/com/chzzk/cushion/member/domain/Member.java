@@ -48,7 +48,7 @@ public class Member extends BaseTimeEntity {
         return chatRooms.stream()
                 .filter(chatRoom -> chatRoom.getId().equals(roomId))
                 .findFirst()
-                .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_CHAT_ROOM));
+                .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
     }
 
     public void updateAdditionalInfo(String affiliation, String job, String realName) {
