@@ -53,7 +53,9 @@ ncp:
       apiKey: NTA0MjU2MWZlZTcxNDJiY7pPd+orksyO1xg/bSt21ETuPj9PtozFgOhLQ61GWxOV
       apiKeyPrimaryVal: 0tlrvnyZ2hx8XxB7cKTNOMy93v21ZxQtxMYOEEFU
       requestId: ce8edcbc-3520-47f2-8b7e-9667457dc114
-
+    ocr:
+      secretKey: a3Rpd3poakRZdnpoVHJJS1BDdFd6S2VVdGxxR0ZRSFA=
+      apiUrl: https://o3uw4trf4x.apigw.ntruss.com/custom/v1/32848/d0eae8d194776727906d624ca59b2198d53891780a222e3db043f80e500ee1c6/general
 
 logging:
     level:
