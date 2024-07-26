@@ -41,7 +41,7 @@ public class Member extends BaseTimeEntity {
 
     private String realName;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatRoom> chatRooms = new ArrayList<>();
 
     public ChatRoom findChatRoomById(long roomId) {
