@@ -35,7 +35,7 @@ public class ChangeStyleService {
 
         JSONObject requestData = clovaApiRequestDataGenerator
                 .generateWithUserMessage(member, changeStyleRequest.getUserMessage(), chatRoom);
-        String resultMessage = clovaStudioApiExecutor.execute(requestData);
+        String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
         Message messageEntity = saveBotMessage(chatRoom, resultMessage);
         chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());

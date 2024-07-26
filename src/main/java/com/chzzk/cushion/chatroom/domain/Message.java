@@ -27,7 +27,6 @@ public class Message extends BaseTimeEntity {
     private ChatRoom chatRoom;
 
     @NotBlank
-    @Size(max = 400)
     private String content;
 
     @NotNull

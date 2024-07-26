@@ -16,14 +16,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AnalyzeTendencyService {
+public class AnalyzeCharacteristicsService {
 
-    private final ClovaOcrApiExecutor clovaOcrApiExecutor;
-    private final ClovaStudioApiExecutor clovaStudioApiExecutor;
-    private final ClovaApiRequestDataGenerator clovaApiRequestDataGenerator;
     private final MemberRepository memberRepository;
+    private final ClovaOcrApiExecutor clovaOcrApiExecutor;
+    private final ClovaApiRequestDataGenerator clovaApiRequestDataGenerator;
+    private final ClovaStudioApiExecutor clovaStudioApiExecutor;
 
-    public String analyzeTendency(ApiMember apiMember, long roomId, List<MultipartFile> multipartFiles) {
+    public String analyzeCharacteristics(ApiMember apiMember, long roomId, List<MultipartFile> multipartFiles) {
         Member member = apiMember.toMember(memberRepository);
         ChatRoom chatRoom = member.findChatRoomById(roomId);
 
@@ -31,6 +31,6 @@ public class AnalyzeTendencyService {
 
         JSONObject requestData = clovaApiRequestDataGenerator
                 .generateWithConversation(member, conversation, chatRoom);
-        return clovaStudioApiExecutor.execute(requestData);
+        return clovaStudioApiExecutor.analyzeCharacteristics(requestData);
     }
 }
