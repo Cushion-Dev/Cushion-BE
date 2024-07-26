@@ -23,8 +23,8 @@ public class MyUserDetailService implements UserDetailsService {
         return new CustomUserDetails(member);
     }
 
-    public CustomUserDetails loadUserByIdAndUsername(Long userId, String email) throws UsernameNotFoundException {
-        Member member = memberRepository.findByIdAndEmail(userId, email)
+    public CustomUserDetails loadUserByIdAndUsername(Long memberId, String email) throws UsernameNotFoundException {
+        Member member = memberRepository.findByIdAndEmail(memberId, email)
                 .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_MEMBER));
         return new CustomUserDetails(member);
     }

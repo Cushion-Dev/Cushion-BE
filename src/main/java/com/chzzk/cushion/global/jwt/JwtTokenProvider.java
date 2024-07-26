@@ -98,8 +98,8 @@ public class JwtTokenProvider {
     public Authentication getAuthenticationByToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
         String userPrincipal = claims.getSubject();
-        Long userId = getMemberId(token);
-        UserDetails userDetails = myUserDetailService.loadUserByIdAndUsername(userId, userPrincipal);
+        Long memberId = getMemberId(token);
+        UserDetails userDetails = myUserDetailService.loadUserByIdAndUsername(memberId, userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

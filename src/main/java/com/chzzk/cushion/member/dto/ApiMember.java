@@ -15,11 +15,11 @@ import static com.chzzk.cushion.global.exception.ErrorCode.NOT_FOUND_MEMBER;
 public class ApiMember {
 
     private String email;
-    private Long userId;
+    private Long memberId;
 
     public Member toMember(MemberRepository memberRepository) {
         log.info("username={}", email);
-        Member member = memberRepository.findByIdAndEmail(userId, email)
+        Member member = memberRepository.findByIdAndEmail(memberId, email)
                 .orElseThrow(() -> new CushionException(NOT_FOUND_MEMBER));
         log.info("Found member: {}", member);
         return member;
