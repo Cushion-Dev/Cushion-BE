@@ -44,7 +44,7 @@ public class ChatRoom extends BaseTimeEntity {
 
     private LocalDateTime lastUsedAt;
 
-    @OneToMany(mappedBy = "chatRoom")
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
     private List<Message> messages = new ArrayList<>();
 
     public void addMessage(Message message) {
