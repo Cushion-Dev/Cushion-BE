@@ -11,6 +11,7 @@ import com.chzzk.cushion.member.dto.ApiMember;
 import com.chzzk.cushion.style.domain.ClovaApiRequestDataGenerator;
 import com.chzzk.cushion.style.domain.ClovaStudioApiExecutor;
 import com.chzzk.cushion.style.dto.ChangeStyleRequest;
+import com.chzzk.cushion.style.dto.ChangeStyleWithCharacteristicsRequest;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -26,15 +27,15 @@ public class ChangeStyleService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public String changeStyle(ApiMember apiMember, ChangeStyleRequest changeStyleRequest) {
+    public String changeStyle(ApiMember apiMember, ChangeStyleRequest request) {
         Member member = apiMember.toMember(memberRepository);
-        ChatRoom chatRoom = member.findChatRoomById(changeStyleRequest.getRoomId());
+        ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
 
         // 사용자가 입력한 변환 전 메시지 저장
-        saveUserMessage(chatRoom, changeStyleRequest.getUserMessage());
+        saveUserMessage(chatRoom, request.getUserMessage());
 
         JSONObject requestData = clovaApiRequestDataGenerator
-                .generateWithUserMessage(member, changeStyleRequest.getUserMessage(), chatRoom);
+                .generateWithUserMessage(member, request.getUserMessage(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
         Message messageEntity = saveBotMessage(chatRoom, resultMessage);
@@ -73,5 +74,24 @@ public class ChangeStyleService {
                 .build();
         chatRoom.addMessage(message);
         return message;
+    }
+
+    @Transactional
+    public String changeStyleWithCharacteristics(ApiMember apiMember,
+                                                 ChangeStyleWithCharacteristicsRequest request) {
+        Member member = apiMember.toMember(memberRepository);
+        ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
+
+        // 사용자가 입력한 변환 전 메시지 저장
+        saveUserMessage(chatRoom, request.getUserMessage());
+
+        JSONObject requestData = clovaApiRequestDataGenerator
+                .generateWithUserMessageAndCharacteristics(member, request.getUserMessage(), request.getCharacteristics(), chatRoom);
+        String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
+
+        Message messageEntity = saveBotMessage(chatRoom, resultMessage);
+        chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
+
+        return resultMessage;
     }
 }
