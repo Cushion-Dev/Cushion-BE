@@ -125,9 +125,6 @@ public class JwtTokenProvider {
 
             // 에러 로그 출력
             log.error("Invalid JWT token: {}", e.getMessage());
-            log.info(e.getMessage());
-            log.info(e.getLocalizedMessage());
-            log.info(e.getCause().toString());
             throw new CushionException(INVALID_JWT_TOKEN);
         }
     }
