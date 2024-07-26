@@ -28,9 +28,9 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성합니다.")
     @PostMapping
-    public void createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
+    public ChatRoomDetailResponse createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
                                @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
-        chatRoomService.create(chatRoomCreateRequest, apiMember);
+        return chatRoomService.create(chatRoomCreateRequest, apiMember);
     }
 
     @Operation(summary = "채팅방 목록 조회", description = "채팅방 목록을 조회합니다.")

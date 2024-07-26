@@ -49,6 +49,9 @@ public class ChatRoomResponse { // TODO : DTO 통합
     @AllArgsConstructor
     public static class ChatRoomDetailResponse {
 
+        @Schema(description = "채팅방 ID", example = "1")
+        private long roomId;
+
         @Schema(description = "상대방 이름", example = "김철수")
         private String partnerName;
 
@@ -66,9 +69,10 @@ public class ChatRoomResponse { // TODO : DTO 통합
 
         public static ChatRoomDetailResponse fromEntity(ChatRoom chatRoom, List<Message> messages) {
             return ChatRoomDetailResponse.builder()
+                    .roomId(chatRoom.getId())
                     .partnerName(chatRoom.getPartnerName())
                     .relationship(chatRoom.getPartnerRel().getLabel())
-                    .messages(messages.stream()
+                    .messages(messages == null ? null : messages.stream()
                             .map(MessageResponse::fromEntity)
                             .collect(Collectors.toList()))
                     .createdAt(chatRoom.getCreatedAt() == null ? null : chatRoom.getCreatedAt().toLocalDate())
