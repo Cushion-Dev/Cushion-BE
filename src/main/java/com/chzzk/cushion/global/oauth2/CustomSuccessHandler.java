@@ -54,7 +54,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         if (isNew) {
             response.sendRedirect(redirectUrlNewMember);
         } else {
-            response.sendRedirect(redirectUrlExistingMember);
+            response.sendRedirect(redirectUrlExistingMember + member.getId());
         }
     }
 }
