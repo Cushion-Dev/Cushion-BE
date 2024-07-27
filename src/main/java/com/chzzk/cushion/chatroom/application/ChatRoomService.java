@@ -36,7 +36,7 @@ public class ChatRoomService {
         // 멤버 검증
         Member member = apiMember.toMember(memberRepository);
 
-        String chatRoomTitle = chatRoomCreateRequest.getPartnerName() + "(" + chatRoomCreateRequest.getPartnerRel().getLabel() + ")" + "님과의 쿠션";
+        String chatRoomTitle = "%s(%s)님과의 쿠션".formatted(chatRoomCreateRequest.getPartnerName(), chatRoomCreateRequest.getPartnerRel().getLabel());
         ChatRoom chatRoom = chatRoomCreateRequest.toEntity(member, chatRoomTitle);
 
         chatRoomRepository.save(chatRoom);

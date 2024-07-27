@@ -7,6 +7,7 @@ import com.chzzk.cushion.member.dto.MemberDto;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Iterator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -31,7 +32,7 @@ public class MemberService {
         }
 
         clearCookies(request, response);
-        return new RedirectView("https://www.coocian.com"); // 로그아웃 후 리디렉션할 URL
+        return new RedirectView("http://localhost:3000"); // 로그아웃 후 리디렉션할 URL
     }
 
     @Transactional
