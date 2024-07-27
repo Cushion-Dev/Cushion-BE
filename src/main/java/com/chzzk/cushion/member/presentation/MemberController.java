@@ -64,7 +64,8 @@ public class MemberController {
 
     @PutMapping("/my-info")
     @Operation(summary = "사용자 추가 정보 수정", description = "사용자의 추가 정보(소속, 직무, 이름)을 수정합니다.")
-    public void updateAdditionalInfo(@RequestBody MemberDto memberDto, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+    public void updateAdditionalInfo(@Valid @RequestBody MemberDto memberDto,
+                                     @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         memberService.saveMemberAdditionalInfo(memberDto, apiMember);
     }
 
