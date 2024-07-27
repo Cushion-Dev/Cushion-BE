@@ -73,7 +73,6 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("*");
         configuration.addExposedHeader("Authorization");
-        configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(MAX_AGE_SEC);
