@@ -13,6 +13,7 @@ import com.chzzk.cushion.member.dto.ApiMember;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +29,8 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성합니다.")
     @PostMapping
-    public ChatRoomSimpleResponse createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
-                               @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+    public ChatRoomSimpleResponse createChatRoom(@Valid @RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
+                                                 @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         return chatRoomService.create(chatRoomCreateRequest, apiMember);
     }
 
@@ -49,7 +50,7 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 수정", description = "채팅방에 대한 정보를 수정합니다.")
     @PutMapping("/{roomId}")
-    public void updateChatRoom(@PathVariable long roomId, @RequestBody ChatRoomUpdateRequest chatRoomUpdateRequest,
+    public void updateChatRoom(@PathVariable long roomId, @Valid @RequestBody ChatRoomUpdateRequest chatRoomUpdateRequest,
                                @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         chatRoomService.update(chatRoomUpdateRequest, roomId, apiMember);
     }

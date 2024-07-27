@@ -5,6 +5,9 @@ import com.chzzk.cushion.chatroom.domain.Relationship;
 import com.chzzk.cushion.member.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +20,8 @@ public class ChatRoomRequest {
     public static class ChatRoomCreateRequest {
 
         @Schema(description = "상대방 이름", example = "김철수")
+        @NotBlank(message = "상대방 이름은 공백을 허용하지 않습니다.")
+        @Size(max = 15, message = "상대방 이름 글자수는 0에서 15 사이여야 합니다.")
         private String partnerName;
 
         @Schema(description = "상대방 관계", example = "FRIEND")
@@ -50,6 +55,8 @@ public class ChatRoomRequest {
     public static class ChatRoomUpdateRequest {
 
         @Schema(description = "수정할 상대방 이름", example = "김철수")
+        @NotBlank(message = "상대방 이름은 공백을 허용하지 않습니다.")
+        @Size(max = 15, message = "상대방 이름 글자수는 0에서 15 사이여야 합니다.")
         private String partnerName;
 
         @Schema(description = "수정할 상대방 관계", example = "FRIEND")
