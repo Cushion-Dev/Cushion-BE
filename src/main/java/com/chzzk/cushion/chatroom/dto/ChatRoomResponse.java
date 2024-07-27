@@ -80,4 +80,36 @@ public class ChatRoomResponse { // TODO : DTO 통합
                     .build();
         }
     }
+
+    @Schema(description = "채팅방 생성 후 조회 응답")
+    @Data
+    @Builder
+    @AllArgsConstructor
+    public static class ChatRoomSimpleResponse {
+
+        @Schema(description = "채팅방 ID", example = "1")
+        private long roomId;
+
+        @Schema(description = "사용자 이름", example = "최진호")
+        private String userName;
+
+        @Schema(description = "상대방 이름", example = "김철수")
+        private String partnerName;
+
+        @Schema(description = "상대방 관계", example = "동료")
+        private String relationship;
+
+        @Schema(description = "채팅방 생성일", example = "2024/05/30")
+        private LocalDate createdAt;
+
+        public static ChatRoomSimpleResponse fromEntity(ChatRoom chatRoom) {
+            return ChatRoomSimpleResponse.builder()
+                    .roomId(chatRoom.getId())
+                    .userName(chatRoom.getMember().getRealName())
+                    .partnerName(chatRoom.getPartnerName())
+                    .relationship(chatRoom.getPartnerRel().getLabel())
+                    .createdAt(chatRoom.getCreatedAt() == null ? null : chatRoom.getCreatedAt().toLocalDate())
+                    .build();
+        }
+    }
 }

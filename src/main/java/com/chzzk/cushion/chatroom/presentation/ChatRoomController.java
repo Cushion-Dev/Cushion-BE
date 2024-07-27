@@ -3,10 +3,10 @@ package com.chzzk.cushion.chatroom.presentation;
 import com.chzzk.cushion.chatroom.application.ChatRoomService;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomUpdateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
-import com.chzzk.cushion.chatroom.dto.ChatRoomRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
+import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomSimpleResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto.MessageRequest;
 import com.chzzk.cushion.global.utils.AuthPrincipal;
 import com.chzzk.cushion.member.dto.ApiMember;
@@ -28,7 +28,7 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성합니다.")
     @PostMapping
-    public ChatRoomDetailResponse createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
+    public ChatRoomSimpleResponse createChatRoom(@RequestBody ChatRoomCreateRequest chatRoomCreateRequest,
                                @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         return chatRoomService.create(chatRoomCreateRequest, apiMember);
     }
