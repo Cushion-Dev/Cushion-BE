@@ -1,16 +1,14 @@
 package com.chzzk.cushion.chatroom.application;
 
-import static com.chzzk.cushion.global.exception.ErrorCode.NOT_FOUND_CHAT_ROOM_THAT_MEMBER;
-
 import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.chatroom.domain.repository.ChatRoomRepository;
 import com.chzzk.cushion.chatroom.domain.repository.MessageRepository;
-import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomUpdateRequest;
-import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
+import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomUpdateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
+import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomSimpleResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto.MessageRequest;
 import com.chzzk.cushion.global.exception.CushionException;
@@ -22,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.chzzk.cushion.global.exception.ErrorCode.NOT_FOUND_CHAT_ROOM_THAT_MEMBER;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +83,7 @@ public class ChatRoomService {
                 .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
 
         List<Message> messages = chatRoom.getMessages();
+        messages.sort((m1, m2) -> m2.getCreatedAt().compareTo(m1.getCreatedAt()));
 
         return ChatRoomDetailResponse.fromEntity(chatRoom, messages);
 
@@ -92,7 +93,7 @@ public class ChatRoomService {
     public void saveMessage(MessageRequest messageRequest, Long roomId, ApiMember apiMember) {
         Member member = apiMember.toMember(memberRepository);
         ChatRoom chatRoom = chatRoomRepository.findByIdAndMember(roomId, member)
-                        .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
+                .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
 
         Message message = messageRequest.toEntity(chatRoom);
         messageRepository.save(message);
