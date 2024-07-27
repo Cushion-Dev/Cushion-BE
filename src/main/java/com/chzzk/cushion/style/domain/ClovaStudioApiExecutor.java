@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,28 +33,16 @@ public class ClovaStudioApiExecutor {
 
     public String changeStyleDefault(JSONObject requestData) {
         try {
-            StopWatch totalTime = start("total time");
-
             // API 요청 전송
-            StopWatch apiRequestStopWatch = start("api request time");
             URL url = new URL(apiUrl);
             HttpURLConnection connection = createRequestHeader(url);
             request(connection, requestData);
-            stop(apiRequestStopWatch);
 
             // API 응답 수신
-            StopWatch apiResponseStopWatch = start("api response time");
             String responseData = getResponseData(connection);
-            stop(apiResponseStopWatch);
 
             // 데이터 파싱
-            StopWatch dataParsingStopWatch = start("data parsing time");
-            String result = parseResponseData(responseData, "변환: ");
-
-            stop(dataParsingStopWatch);
-
-            stop(totalTime);
-            return result;
+            return parseResponseData(responseData, "변환: ");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -63,28 +50,16 @@ public class ClovaStudioApiExecutor {
 
     public String analyzeCharacteristics(JSONObject requestData) {
         try {
-            StopWatch totalTime = start("total time");
-
             // API 요청 전송
-            StopWatch apiRequestStopWatch = start("api request time");
             URL url = new URL(apiUrl);
             HttpURLConnection connection = createRequestHeader(url);
             request(connection, requestData);
-            stop(apiRequestStopWatch);
 
             // API 응답 수신
-            StopWatch apiResponseStopWatch = start("api response time");
             String responseData = getResponseData(connection);
-            stop(apiResponseStopWatch);
 
             // 데이터 파싱
-            StopWatch dataParsingStopWatch = start("data parsing time");
-            String result = parseResponseData(responseData, "상대방 성격 : ");
-
-            stop(dataParsingStopWatch);
-
-            stop(totalTime);
-            return result;
+            return parseResponseData(responseData, "성격: ");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -110,18 +85,13 @@ public class ClovaStudioApiExecutor {
     }
 
     private String getResponseData(HttpURLConnection connection) throws IOException {
-        StopWatch responseCheckingStopWatch = start("response checking time");
         BufferedReader reader = checkResponse(connection);
-        stop(responseCheckingStopWatch);
-
-        StopWatch responseReadingStopWatch = start("response reading time");
         String line;
         StringBuilder response = new StringBuilder();
         while ((line = reader.readLine()) != null) {
             response.append(line);
         }
         reader.close();
-        stop(responseReadingStopWatch);
 
         return response.toString();
     }
@@ -163,16 +133,5 @@ public class ClovaStudioApiExecutor {
         }
 
         return "NONE";
-    }
-
-    private StopWatch start(String watchName) {
-        StopWatch stopWatch = new StopWatch(watchName);
-        stopWatch.start();
-        return stopWatch;
-    }
-
-    private void stop(StopWatch stopWatch) {
-        stopWatch.stop();
-        log.info("{}(ms) : {}", stopWatch.getId(), stopWatch.getTotalTimeMillis());
     }
 }
