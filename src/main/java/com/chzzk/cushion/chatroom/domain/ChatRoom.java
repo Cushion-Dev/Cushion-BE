@@ -58,6 +58,6 @@ public class ChatRoom extends BaseTimeEntity {
     public void updateInfo(String partnerName, Relationship partnerRel) {
         this.partnerName = partnerName;
         this.partnerRel = partnerRel;
-        this.title = partnerName + "(" + partnerRel + ")" + "님과의 쿠션";
+        this.title = partnerName + "(" + partnerRel.getLabel() + ")" + "님과의 쿠션";
     }
 }
