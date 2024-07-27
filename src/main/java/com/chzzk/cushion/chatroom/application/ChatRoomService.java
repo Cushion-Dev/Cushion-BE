@@ -11,6 +11,7 @@ import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomCreateRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomRequest.ChatRoomDeleteRequest;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
+import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomSimpleResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto.MessageRequest;
 import com.chzzk.cushion.global.exception.CushionException;
 import com.chzzk.cushion.member.domain.Member;
@@ -31,7 +32,7 @@ public class ChatRoomService {
     private final MessageRepository messageRepository;
 
     @Transactional
-    public ChatRoomDetailResponse create(ChatRoomCreateRequest chatRoomCreateRequest, ApiMember apiMember) {
+    public ChatRoomSimpleResponse create(ChatRoomCreateRequest chatRoomCreateRequest, ApiMember apiMember) {
         // 멤버 검증
         Member member = apiMember.toMember(memberRepository);
 
@@ -39,7 +40,7 @@ public class ChatRoomService {
         ChatRoom chatRoom = chatRoomCreateRequest.toEntity(member, chatRoomTitle);
 
         chatRoomRepository.save(chatRoom);
-        return ChatRoomDetailResponse.fromEntity(chatRoom, chatRoom.getMessages());
+        return ChatRoomSimpleResponse.fromEntity(chatRoom);
     }
 
     @Transactional(readOnly = true)
