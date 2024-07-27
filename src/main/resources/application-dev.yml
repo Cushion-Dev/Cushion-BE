@@ -30,5 +30,5 @@ logging:
 
 oauth2:
   success:
-    redirect-url-new: http://localhost:3000/cushion # TODO : 프론트 도메인 연결시 변경
-    redirect-url-existing: http://localhost:3000/chat-list/
+    redirect-url-new: https://www.coocian.com/cushion # TODO : 프론트 도메인 연결시 변경
+    redirect-url-existing: https://www.coocian.com/chat-list/

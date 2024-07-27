@@ -32,7 +32,7 @@ public class MemberService {
         }
 
         clearCookies(request, response);
-        return new RedirectView("http://localhost:3000"); // 로그아웃 후 리디렉션할 URL
+        return new RedirectView("https://www.coocian.com"); // 로그아웃 후 리디렉션할 URL
     }
 
     @Transactional
