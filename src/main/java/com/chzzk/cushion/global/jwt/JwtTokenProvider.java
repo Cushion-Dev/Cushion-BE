@@ -97,6 +97,16 @@ public class JwtTokenProvider {
         return cookie;
     }
 
+    public static Cookie createMemberIdCookie(Long memberId) {
+        String cookieName = "memberId";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
     public Authentication getAuthenticationByToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
         String userPrincipal = claims.getSubject();

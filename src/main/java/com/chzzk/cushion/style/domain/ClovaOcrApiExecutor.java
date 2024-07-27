@@ -81,7 +81,7 @@ public class ClovaOcrApiExecutor {
         } else if (Objects.equals(contentType, "image/tiff")) {
             image.put("format", "tiff");
         }
-        image.put("name", "demo");
+        image.put("name", multipartFile.getName());
 
         images.add(image);
 
