@@ -82,7 +82,6 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("https://talk-cushion.kro.kr");
         configuration.addAllowedOriginPattern("http://www.coocian.com");
         configuration.addAllowedOriginPattern("https://www.coocian.com");
-        configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
