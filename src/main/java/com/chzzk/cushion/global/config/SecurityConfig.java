@@ -89,7 +89,6 @@ public class SecurityConfig {
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.addExposedHeader("Set-Cookie");
-        configuration.addExposedHeader("Access-Control-Allow-Origin");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(MAX_AGE_SEC);
