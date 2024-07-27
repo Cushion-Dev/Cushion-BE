@@ -85,9 +85,11 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("https://223.130.156.238:3000");
         configuration.addAllowedOriginPattern("http://www.coocian.com");
         configuration.addAllowedOriginPattern("https://www.coocian.com");
+        configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.addExposedHeader("Set-Cookie");
+        configuration.addExposedHeader("Access-Control-Allow-Origin");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(MAX_AGE_SEC);
