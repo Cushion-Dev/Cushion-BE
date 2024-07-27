@@ -10,11 +10,12 @@ import org.springframework.stereotype.Component;
 public class ClovaApiRequestDataGenerator {
 
     public JSONObject generateWithUserMessage(Member member, String sentence, ChatRoom chatRoom) {
-        String promptSystemMessage = "- 당신의 역할은 사용자가 입력한 문장의 의도와 맥락을 파악하여 문체를 부드럽고 정중하게 변환해주는 것입니다. \n" +
+        String promptSystemMessage = "- 당신의 역할은 문장을 부드럽고 정중하게 변환하는 것입니다.\n" +
                 "- 상대방 관계를 바탕으로 적절한 어휘를 선택해주세요.\n" +
                 "- 다까체 70% + 요죠체 30% 정도로 적절하게 분배합니다.\n" +
                 "- 명령조의 문장이 있다면 의뢰나 질문 형식으로 변환해 주세요.\n" +
                 "- 부정적 표현보다는 긍정적 표현을 강조하여 사용해 주세요.\n" +
+                "- 반드시 답변 앞에 '변환: '을 붙여주세요.\n" +
                 "\n" +
                 "\n" +
                 "사용자 이름: 주경민\n" +
@@ -71,12 +72,12 @@ public class ClovaApiRequestDataGenerator {
 
     public JSONObject generateWithUserMessageAndCharacteristics(Member member, String sentence,
                                                                 String characteristics, ChatRoom chatRoom) {
-        String promptSystemMessage = "- 당신의 역할은 사용자가 입력한 문장의 의도와 맥락을 파악하여 문체를 부드럽고 정중하게 변환해주는 것입니다. \n" +
+        String promptSystemMessage = "- 당신의 역할은 문장을 부드럽고 정중하게 변환하는 것입니다.\n" +
                 "- 상대방 관계와 성격을 바탕으로 적절한 단어와 문체를 선택해주세요.\n" +
                 "- 다까체 70% + 요죠체 30% 정도로 적절하게 분배합니다.\n" +
                 "- 명령조의 문장이 있다면 의뢰나 질문 형식으로 변환해 주세요.\n" +
                 "- 부정적 표현보다는 긍정적 표현을 강조하여 사용해 주세요.\n" +
-                "\n" +
+                "- 반드시 답변 앞에 '변환: '을 붙여주세요.\n" +
                 "\n" +
                 "사용자 이름: 주경민\n" +
                 "사용자 소속: 은행\n" +
@@ -137,6 +138,7 @@ public class ClovaApiRequestDataGenerator {
 
     public JSONObject generateWithConversation(Member member, String conversation, ChatRoom chatRoom) {
         String promptSystemMessage = "- 당신의 역할은 사용자와 상대방의 관계를 바탕으로 입력된 대화 내용의 맥락을 파악하고, 이를 통해 상대방의 본래 성격을 분석하는 것입니다.\n" +
+                "- 반드시 답변 앞에 '성격: '을 붙여주세요.\n" +
                 "\n" +
                 "사용자 이름: 한재민\n" +
                 "사용자 소속: 집\n" +
@@ -182,7 +184,7 @@ public class ClovaApiRequestDataGenerator {
                 "기를 바랍니다. 정말 감사합니다.\n" +
                 "오전 1:02\n" +
                 "1\n" +
-                "상대방 성격: 신중하고 차분한 성격으로 보입니다. 자신의 행동이 주변에 영향을 미치는 것을 인식하고 있으며, 이에 대해 책임감을 느끼고 있습니다. 또한, 대인관계를 중요시하며 상대방을 배려하는 모습을 보입니다.\n" +
+                "성격: 신중하고 차분한 성격으로 보입니다. 자신의 행동이 주변에 영향을 미치는 것을 인식하고 있으며, 이에 대해 책임감을 느끼고 있습니다. 또한, 대인관계를 중요시하며 상대방을 배려하는 모습을 보입니다.\n" +
                 "###\n" +
                 "사용자 이름: 김민주\n" +
                 "사용자 소속: IT회사\n" +
@@ -217,7 +219,7 @@ public class ClovaApiRequestDataGenerator {
                 "한재민\n" +
                 "그러면 QA를 못할 수도 있는데\n" +
                 "+ \n" +
-                "상대방 성격: 적극적이고 목표 지향적인 성격으로 보입니다. 현재 상황을 빠르게 파악하고, 문제를 해결하기 위해 노력하며, 팀원들과의 협력을 중요시 합니다. 또한, 업무에 대한 책임감이 강하고, 계획적으로 일을 처리하는 것으로 보입니다.\n" +
+                "성격: 적극적이고 목표 지향적인 성격으로 보입니다. 현재 상황을 빠르게 파악하고, 문제를 해결하기 위해 노력하며, 팀원들과의 협력을 중요시 합니다. 또한, 업무에 대한 책임감이 강하고, 계획적으로 일을 처리하는 것으로 보입니다.\n" +
                 "###\n" +
                 "사용자 이름: 박진경\n" +
                 "사용자 소속: IT 중견기업\n" +
@@ -241,7 +243,24 @@ public class ClovaApiRequestDataGenerator {
                 "오후 12:53\n" +
                 "넵 자료 지금 다시 보내드리겠습니다.\n" +
                 "+ #\n" +
-                "상대방 성격: 꼼꼼하고 엄격한 성격으로 보입니다. 일 처리에 있어서 정확성을 중요시하며, 실수에 대해 용납하지 않는 모습을 보입니다. 또한, 부하 직원에게 업무 지시를 내릴 때 명확하게 하며, 피드백을 줄 때는 직설적으로 하는 편입니다.";
+                "성격: 꼼꼼하고 엄격한 성격으로 보입니다. 일 처리에 있어서 정확성을 중요시하며, 실수에 대해 용납하지 않는 모습을 보입니다. 또한, 부하 직원에게 업무 지시를 내릴 때 명확하게 하며, 피드백을 줄 때는 직설적으로 하는 편입니다.\n" +
+                "###\n" +
+                "사용자 이름: 주경민\n" +
+                "사용자 소속: 은행\n" +
+                "사용자 직무: 대리\n" +
+                "상대방 이름: 이은진\n" +
+                "상대방 관계: 배우자\n" +
+                "대화 내용: 이은진\n" +
+                "오빠 오늘 언제와?\n" +
+                "몰라 일 마쳐봐야 알 것 같은디\n" +
+                "올 때 수영이 픽업좀해와\n" +
+                "오늘 학원 어디갔는데?\n" +
+                "피아노~\n" +
+                "엉 알겠어 몇시까지\n" +
+                "9시까지 그 타이어가게 모퉁이에 차세우고 기다리고 있어 시간 괜찮지?\n" +
+                "엉 넉넉해 알겠어\n" +
+                "고마워~~~\n" +
+                "성격 : 자상하고 배려심이 깊은 성격으로 보입니다. 가족 구성원의 일을 신경쓰고 도우며, 특히 아내의 부탁을 잘 들어주는 것으로 보입니다. 일과 가정 생활 모두 균형있게 유지하려고 노력하는 것 같습니다.";
 
         JSONObject system = new JSONObject();
         system.put("role", "system");
@@ -255,7 +274,7 @@ public class ClovaApiRequestDataGenerator {
     }
 
     private String createUserMessageForChangingStyle(Member member, ChatRoom chatRoom, String userMessage,
-                                                           String characteristics) {
+                                                     String characteristics) {
         StringBuffer sb = new StringBuffer();
         sb.append("사용자 이름: ").append(member.getRealName()).append("\n");
         sb.append("사용자 소속: ").append(member.getAffiliation()).append("\n");
@@ -270,7 +289,7 @@ public class ClovaApiRequestDataGenerator {
     }
 
     private String createUserMessageForAnalyzingCharacteristics(Member member, ChatRoom chatRoom,
-                                                                      String userMessage) {
+                                                                String userMessage) {
         StringBuffer sb = new StringBuffer();
         sb.append("사용자 이름: ").append(member.getRealName()).append("\n");
         sb.append("사용자 소속: ").append(member.getAffiliation()).append("\n");
