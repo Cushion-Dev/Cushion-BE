@@ -8,6 +8,7 @@ import com.chzzk.cushion.style.dto.ChangeStyleWithCharacteristicsRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,14 +26,14 @@ public class ChangeStyleController {
     @Operation(summary = "문체 변환", description = "문체를 변환합니다.")
     @PostMapping
     public String changeStyle(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
-                              @RequestBody ChangeStyleRequest changeStyleRequest) {
+                              @Valid @RequestBody ChangeStyleRequest changeStyleRequest) {
         return changeStyleService.changeStyle(apiMember, changeStyleRequest);
     }
 
     @Operation(summary = "상대방 성격을 이용한 문체 변환", description = "상대방 성격을 이용해 문체를 변환합니다.")
     @PostMapping("/characteristics")
     public String changeStyle(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
-                              @RequestBody ChangeStyleWithCharacteristicsRequest changeStyleWithCharacteristicsRequest) {
+                              @Valid @RequestBody ChangeStyleWithCharacteristicsRequest changeStyleWithCharacteristicsRequest) {
         return changeStyleService.changeStyleWithCharacteristics(apiMember, changeStyleWithCharacteristicsRequest);
     }
 }
