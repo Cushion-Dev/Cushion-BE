@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -56,7 +57,8 @@ public class MemberController {
 
     @PostMapping("/my-info")
     @Operation(summary = "사용자 추가 정보 설정", description = "사용자의 추가 정보(소속, 직무, 이름)을 설정합니다.")
-    public void saveAdditionalInfo(@RequestBody MemberDto memberDto, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+    public void saveAdditionalInfo(@Valid @RequestBody MemberDto memberDto,
+                                   @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         memberService.saveMemberAdditionalInfo(memberDto, apiMember);
     }
 
