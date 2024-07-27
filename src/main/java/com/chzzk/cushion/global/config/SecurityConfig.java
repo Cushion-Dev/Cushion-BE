@@ -71,17 +71,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOriginPattern("http://localhost:8081");
-        configuration.addAllowedOriginPattern("http://localhost:3000"); // 프론트 쪽에서 허용
-        configuration.addAllowedOriginPattern("http://localhost:8080");
-        configuration.addAllowedOriginPattern("http://localhost:5173");
-        configuration.addAllowedOriginPattern("http://223.130.132.182"); // 도메인 주소
-        configuration.addAllowedOriginPattern("http://223.130.132.182:8080");
-        configuration.addAllowedOriginPattern("http://223.130.132.182:8081");
-        configuration.addAllowedOriginPattern("http://223.130.132.182:5173");
-        configuration.addAllowedOriginPattern("https://talk-cushion.kro.kr");
-        configuration.addAllowedOriginPattern("http://www.coocian.com");
-        configuration.addAllowedOriginPattern("https://www.coocian.com");
+        configuration.addAllowedOriginPattern("*");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
