@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
@@ -96,8 +98,10 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthenticationByToken(String token) {
-        String userPrincipal = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody().getSubject();
-        UserDetails userDetails = myUserDetailService.loadUserByUsername(userPrincipal);
+        Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+        String userPrincipal = claims.getSubject();
+        Long memberId = getMemberId(token);
+        UserDetails userDetails = myUserDetailService.loadUserByIdAndUsername(memberId, userPrincipal);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
@@ -118,6 +122,9 @@ public class JwtTokenProvider {
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
+
+            // 에러 로그 출력
+            log.error("Invalid JWT token: {}", e.getMessage());
             throw new CushionException(INVALID_JWT_TOKEN);
         }
     }
@@ -142,5 +149,10 @@ public class JwtTokenProvider {
             return customUserDetails.getMemberId();
         }
         return null;
+    }
+
+    public Long getMemberId(String token) {
+        Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
+        return claims.get("memberId", Long.class);
     }
 }

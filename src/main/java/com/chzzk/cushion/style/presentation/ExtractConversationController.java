@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-@Tag(name = "style", description = "문체 변환 API")
+@Tag(name = "clova", description = "CLOVA 관련 API")
 @RequestMapping("/ocr")
 @RestController
 @RequiredArgsConstructor

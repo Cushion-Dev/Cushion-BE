@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "style", description = "문체 변환 API")
+@Tag(name = "clova", description = "CLOVA 관련 API")
 @RequestMapping("/change-style")
 @RestController
 @RequiredArgsConstructor

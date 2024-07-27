@@ -15,6 +15,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -72,7 +73,14 @@ public class ClovaOcrApiExecutor {
 
         ArrayNode images = mapper.createArrayNode();
         ObjectNode image = mapper.createObjectNode();
-        image.put("format", "jpeg");
+        String contentType = multipartFile.getContentType();
+        if (Objects.equals(contentType, "image/png")) {
+            image.put("format", "png");
+        } else if (Objects.equals(contentType, "image/jpeg")) {
+            image.put("format", "jpeg");
+        } else if (Objects.equals(contentType, "image/tiff")) {
+            image.put("format", "tiff");
+        }
         image.put("name", "demo");
 
         images.add(image);
