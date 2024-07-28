@@ -83,7 +83,7 @@ public class JwtTokenProvider {
 
     public static Cookie createCookie(String refreshToken) {
         String cookieName = "refreshToken";
-        Cookie cookie = new Cookie(cookieName, "Bearer " + refreshToken);
+        Cookie cookie = new Cookie(cookieName, refreshToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true);
         cookie.setDomain("www.coocian.com");
@@ -93,7 +93,7 @@ public class JwtTokenProvider {
 
     public static Cookie createAccessCookie(String accessToken) {
         String cookieName = "accessToken";
-        Cookie cookie = new Cookie(cookieName, "Bearer " + accessToken);
+        Cookie cookie = new Cookie(cookieName, accessToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setDomain("www.coocian.com");
@@ -112,7 +112,7 @@ public class JwtTokenProvider {
     }
 
     public static ResponseCookie createRefreshCookieHeader(String refreshToken) {
-        return ResponseCookie.from("refreshToken", refreshToken)
+        return ResponseCookie.from(refreshToken)
                 .httpOnly(false)
                 .secure(true)
                 .domain("coocian.com")
