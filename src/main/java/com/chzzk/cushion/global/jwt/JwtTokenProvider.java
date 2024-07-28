@@ -86,7 +86,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, refreshToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(false);
-        cookie.setPath("/");
+        cookie.setPath("/chat-list");
         cookie.setDomain("coocian.com");
         cookie.setMaxAge(60 * 60 * 24); // accessToken 유효
         return cookie;
@@ -108,7 +108,8 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, memberId.toString());
         cookie.setHttpOnly(false);
         cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setPath("/");
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/chat-list");
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
     }
