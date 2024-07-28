@@ -290,49 +290,6 @@ public class JwtTokenProvider {
         return cookie;
     }
 
-    public static Cookie createTestCookie19(Long memberId) {
-        String cookieName = "test19";
-        Cookie cookie = new Cookie(cookieName, memberId.toString());
-        cookie.setHttpOnly(false);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain("http://223.130.156.238:3000");
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24);
-        return cookie;
-    }
-
-    public static Cookie createTestCookie20(Long memberId) {
-        String cookieName = "test20";
-        Cookie cookie = new Cookie(cookieName, memberId.toString());
-        cookie.setHttpOnly(false);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain("http://223.130.156.238:3000");
-        cookie.setPath("/chat-list");
-        cookie.setMaxAge(60 * 60 * 24);
-        return cookie;
-    }
-
-    public static Cookie createTestCookie21(Long memberId) {
-        String cookieName = "test21";
-        Cookie cookie = new Cookie(cookieName, memberId.toString());
-        cookie.setHttpOnly(false);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain("https://223.130.156.238");
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24);
-        return cookie;
-    }
-
-    public static Cookie createTestCookie22(Long memberId) {
-        String cookieName = "test22";
-        Cookie cookie = new Cookie(cookieName, memberId.toString());
-        cookie.setHttpOnly(false);
-        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain("https://223.130.156.238");
-        cookie.setPath("/chat-list");
-        cookie.setMaxAge(60 * 60 * 24);
-        return cookie;
-    }
     public static Cookie createRealTestCookie(String accessToken) {
         String cookieName = "accessToken";
         Cookie cookie = new Cookie(cookieName, accessToken);
