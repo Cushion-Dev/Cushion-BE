@@ -26,8 +26,6 @@ import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie13;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie14;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie15;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie16;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie17;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie18;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie19;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie2;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie20;
@@ -88,8 +86,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createTestCookie14(member.getId()));
         response.addCookie(createTestCookie15(member.getId()));
         response.addCookie(createTestCookie16(member.getId()));
-        response.addCookie(createTestCookie17(member.getId()));
-        response.addCookie(createTestCookie18(member.getId()));
         response.addCookie(createTestCookie19(member.getId()));
         response.addCookie(createTestCookie20(member.getId()));
         response.addCookie(createTestCookie21(member.getId()));
