@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -83,8 +86,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, refreshToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true);
-        cookie.setPath(".coocian.com");
-        cookie.setDomain("/");
+        cookie.setPath("www.coocian.com");
         cookie.setMaxAge(60 * 60 * 24); // accessToken 유효
         return cookie;
     }
@@ -94,8 +96,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, accessToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain(".coocian.com");
-        cookie.setPath("/");
+        cookie.setDomain("www.coocian.com");
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
     }
@@ -105,8 +106,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, memberId.toString());
         cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain(".coocian.com");
-        cookie.setPath("/");
+        cookie.setDomain("www.coocian.com");
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
     }
