@@ -83,10 +83,9 @@ public class ChatRoomService {
                 .orElseThrow(() -> new CushionException(NOT_FOUND_CHAT_ROOM_THAT_MEMBER));
 
         List<Message> messages = chatRoom.getMessages();
-        messages.sort((m1, m2) -> m2.getCreatedAt().compareTo(m1.getCreatedAt()));
+        messages.sort(Comparator.comparing(BaseTimeEntity::getCreatedAt));
 
         return ChatRoomDetailResponse.fromEntity(chatRoom, messages);
-
     }
 
     @Transactional
