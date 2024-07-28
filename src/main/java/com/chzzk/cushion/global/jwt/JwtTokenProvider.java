@@ -115,7 +115,7 @@ public class JwtTokenProvider {
         return ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(false)
                 .secure(true)
-                .domain("www.coocian.com")
+                .domain("coocian.com")
                 .maxAge(60 * 60 * 24)
                 .sameSite("None")
                 .build();
@@ -125,7 +125,7 @@ public class JwtTokenProvider {
         return ResponseCookie.from("accessToken", accessToken)
                 .httpOnly(false)
                 .secure(true)
-                .domain("www.coocian.com")
+                .domain("coocian.com")
                 .maxAge(60 * 60 * 24)
                 .sameSite("None")
                 .build();
@@ -135,7 +135,7 @@ public class JwtTokenProvider {
         return ResponseCookie.from("memberId", memberId)
                 .httpOnly(false)
                 .secure(true)
-                .domain("www.coocian.com")
+                .domain("coocian.com")
                 .maxAge(60 * 60 * 24)
                 .sameSite("None")
                 .build();
