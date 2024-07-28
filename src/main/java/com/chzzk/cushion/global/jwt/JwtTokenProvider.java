@@ -116,6 +116,182 @@ public class JwtTokenProvider {
         return cookie;
     }
 
+    public static Cookie createTestCookie1(Long memberId) {
+        String cookieName = "test1";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie2(Long memberId) {
+        String cookieName = "test2";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie3(Long memberId) {
+        String cookieName = "test3";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie4(Long memberId) {
+        String cookieName = "test4";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie5(Long memberId) {
+        String cookieName = "test5";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie6(Long memberId) {
+        String cookieName = "test6";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie7(Long memberId) {
+        String cookieName = "test7";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie8(Long memberId) {
+        String cookieName = "test8";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie9(Long memberId) {
+        String cookieName = "test9";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie10(Long memberId) {
+        String cookieName = "test10";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie11(Long memberId) {
+        String cookieName = "test11";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie12(Long memberId) {
+        String cookieName = "test12";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(false);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie13(Long memberId) {
+        String cookieName = "test13";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie14(Long memberId) {
+        String cookieName = "test14";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("www.coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie15(Long memberId) {
+        String cookieName = "test15";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
+    public static Cookie createTestCookie16(Long memberId) {
+        String cookieName = "test16";
+        Cookie cookie = new Cookie(cookieName, memberId.toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("coocian.com");
+        cookie.setPath("/chat-list");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
+    }
+
     public Authentication getAuthenticationByToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
         String userPrincipal = claims.getSubject();
