@@ -86,7 +86,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, refreshToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true);
-        cookie.setPath("www.coocian.com");
+        cookie.setDomain("www.coocian.com");
         cookie.setMaxAge(60 * 60 * 24); // accessToken 유효
         return cookie;
     }
