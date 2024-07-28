@@ -17,6 +17,7 @@ import java.io.IOException;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createAccessCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createMemberIdCookie;
+import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createRealTestCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie1;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie10;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie11;
@@ -93,6 +94,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createTestCookie20(member.getId()));
         response.addCookie(createTestCookie21(member.getId()));
         response.addCookie(createTestCookie22(member.getId()));
+
+        response.addCookie(createRealTestCookie(accessToken));
 
         if (isNew) {
             response.sendRedirect(redirectUrlNewMember);

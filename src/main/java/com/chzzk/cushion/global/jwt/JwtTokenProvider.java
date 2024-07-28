@@ -355,6 +355,15 @@ public class JwtTokenProvider {
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
     }
+    public static Cookie createRealTestCookie(String accessToken) {
+        String cookieName = "accessToken";
+        Cookie cookie = new Cookie(cookieName, accessToken);
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 2400); // accessToken 유효
+        return cookie;
+    }
 
     public Authentication getAuthenticationByToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
