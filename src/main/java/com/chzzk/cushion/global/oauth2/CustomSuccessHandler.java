@@ -18,22 +18,6 @@ import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createAccessCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createMemberIdCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createRealTestCookie;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie1;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie10;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie11;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie12;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie13;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie14;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie15;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie16;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie2;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie3;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie4;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie5;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie6;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie7;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie8;
-import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createTestCookie9;
 
 @Component
 @RequiredArgsConstructor
@@ -65,23 +49,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createCookie(refreshToken));
         response.addCookie(createAccessCookie(accessToken));
         response.addCookie(createMemberIdCookie(member.getId()));
-
-        response.addCookie(createTestCookie1(member.getId()));
-        response.addCookie(createTestCookie2(member.getId()));
-        response.addCookie(createTestCookie3(member.getId()));
-        response.addCookie(createTestCookie4(member.getId()));
-        response.addCookie(createTestCookie5(member.getId()));
-        response.addCookie(createTestCookie6(member.getId()));
-        response.addCookie(createTestCookie7(member.getId()));
-        response.addCookie(createTestCookie8(member.getId()));
-        response.addCookie(createTestCookie9(member.getId()));
-        response.addCookie(createTestCookie10(member.getId()));
-        response.addCookie(createTestCookie11(member.getId()));
-        response.addCookie(createTestCookie12(member.getId()));
-        response.addCookie(createTestCookie13(member.getId()));
-        response.addCookie(createTestCookie14(member.getId()));
-        response.addCookie(createTestCookie15(member.getId()));
-        response.addCookie(createTestCookie16(member.getId()));
 
         response.addCookie(createRealTestCookie(accessToken));
 
