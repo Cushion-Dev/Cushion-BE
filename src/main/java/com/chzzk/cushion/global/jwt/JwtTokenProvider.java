@@ -83,7 +83,7 @@ public class JwtTokenProvider {
 
     public static Cookie createCookie(String refreshToken) {
         String cookieName = "refreshToken";
-        Cookie cookie = new Cookie(cookieName, refreshToken);
+        Cookie cookie = new Cookie(cookieName, "Bearer " + refreshToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true);
         cookie.setDomain("www.coocian.com");
@@ -93,7 +93,7 @@ public class JwtTokenProvider {
 
     public static Cookie createAccessCookie(String accessToken) {
         String cookieName = "accessToken";
-        Cookie cookie = new Cookie(cookieName, accessToken);
+        Cookie cookie = new Cookie(cookieName, "Bearer " + accessToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setDomain("www.coocian.com");
@@ -111,6 +111,35 @@ public class JwtTokenProvider {
         return cookie;
     }
 
+    public static ResponseCookie createRefreshCookieHeader(String refreshToken) {
+        return ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(false)
+                .secure(true)
+                .domain("www.coocian.com")
+                .maxAge(60 * 60 * 24)
+                .sameSite("None")
+                .build();
+    }
+
+    public static ResponseCookie createAccessTokenCookieHeader(String accessToken) {
+        return ResponseCookie.from("accessToken", accessToken)
+                .httpOnly(false)
+                .secure(true)
+                .domain("www.coocian.com")
+                .maxAge(60 * 60 * 24)
+                .sameSite("None")
+                .build();
+    }
+
+    public static ResponseCookie createMemberIdCookieHeader(String memberId) {
+        return ResponseCookie.from("memberId", memberId)
+                .httpOnly(false)
+                .secure(true)
+                .domain("www.coocian.com")
+                .maxAge(60 * 60 * 24)
+                .sameSite("None")
+                .build();
+    }
     public Authentication getAuthenticationByToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
         String userPrincipal = claims.getSubject();
