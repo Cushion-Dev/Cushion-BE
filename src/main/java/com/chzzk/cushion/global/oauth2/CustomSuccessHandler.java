@@ -86,10 +86,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createTestCookie14(member.getId()));
         response.addCookie(createTestCookie15(member.getId()));
         response.addCookie(createTestCookie16(member.getId()));
-        response.addCookie(createTestCookie19(member.getId()));
-        response.addCookie(createTestCookie20(member.getId()));
-        response.addCookie(createTestCookie21(member.getId()));
-        response.addCookie(createTestCookie22(member.getId()));
 
         response.addCookie(createRealTestCookie(accessToken));
 
