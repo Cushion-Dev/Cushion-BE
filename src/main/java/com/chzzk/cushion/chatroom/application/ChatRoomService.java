@@ -11,6 +11,7 @@ import com.chzzk.cushion.chatroom.dto.ChatRoomResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomDetailResponse;
 import com.chzzk.cushion.chatroom.dto.ChatRoomResponse.ChatRoomSimpleResponse;
 import com.chzzk.cushion.chatroom.dto.MessageDto.MessageRequest;
+import com.chzzk.cushion.global.common.BaseTimeEntity;
 import com.chzzk.cushion.global.exception.CushionException;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static com.chzzk.cushion.global.exception.ErrorCode.NOT_FOUND_CHAT_ROOM_THAT_MEMBER;
@@ -86,6 +88,7 @@ public class ChatRoomService {
         messages.sort(Comparator.comparing(BaseTimeEntity::getCreatedAt));
 
         return ChatRoomDetailResponse.fromEntity(chatRoom, messages);
+
     }
 
     @Transactional
