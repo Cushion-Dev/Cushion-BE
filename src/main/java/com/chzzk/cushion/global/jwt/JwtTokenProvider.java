@@ -290,28 +290,6 @@ public class JwtTokenProvider {
         return cookie;
     }
 
-    public static Cookie createTestCookie17(Long memberId) {
-        String cookieName = "test16";
-        Cookie cookie = new Cookie(cookieName, memberId.toString());
-        cookie.setHttpOnly(false);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain("localhost:3000");
-        cookie.setPath("/chat-list");
-        cookie.setMaxAge(60 * 60 * 24);
-        return cookie;
-    }
-
-    public static Cookie createTestCookie18(Long memberId) {
-        String cookieName = "test18";
-        Cookie cookie = new Cookie(cookieName, memberId.toString());
-        cookie.setHttpOnly(false);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
-        cookie.setDomain("localhost:3000");
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24);
-        return cookie;
-    }
-
     public static Cookie createTestCookie19(Long memberId) {
         String cookieName = "test19";
         Cookie cookie = new Cookie(cookieName, memberId.toString());
