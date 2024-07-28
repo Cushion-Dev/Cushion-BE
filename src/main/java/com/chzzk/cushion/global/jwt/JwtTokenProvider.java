@@ -84,7 +84,6 @@ public class JwtTokenProvider {
         cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24); // accessToken 유효
-        cookie.setDomain("www.coocian.com");
         return cookie;
     }
 
@@ -95,7 +94,6 @@ public class JwtTokenProvider {
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
-        cookie.setDomain("www.coocian.com");
         return cookie;
     }
 
@@ -106,7 +104,6 @@ public class JwtTokenProvider {
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
-        cookie.setDomain("www.coocian.com");
         return cookie;
     }
 
