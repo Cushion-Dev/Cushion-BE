@@ -86,6 +86,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, refreshToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true);
+        cookie.setDomain("talk-cushion.kro.kr");
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24); // accessToken 유효
         return cookie;
@@ -96,6 +97,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, accessToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("talk-cushion.kro.kr");
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
@@ -106,6 +108,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, memberId.toString());
         cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setDomain("talk-cushion.kro.kr");
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
