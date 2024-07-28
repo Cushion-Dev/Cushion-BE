@@ -17,6 +17,7 @@ import java.io.IOException;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createAccessCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createCookie;
 import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createMemberIdCookie;
+import static com.chzzk.cushion.global.jwt.JwtTokenProvider.createRefreshCookieHeader;
 
 @Component
 @RequiredArgsConstructor
@@ -48,6 +49,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createCookie(refreshToken));
         response.addCookie(createAccessCookie(accessToken));
         response.addCookie(createMemberIdCookie(member.getId()));
+
+        response.setHeader("Set-Cookie", "Bearer + " + refreshToken + "; Secure; SameSite=None; Domain=www.coocian.com; Max-Age=2592000");
 
         if (isNew) {
             response.sendRedirect(redirectUrlNewMember);
