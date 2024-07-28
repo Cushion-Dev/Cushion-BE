@@ -85,6 +85,10 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("https://223.130.156.238:3000");
         configuration.addAllowedOriginPattern("http://www.coocian.com");
         configuration.addAllowedOriginPattern("https://www.coocian.com");
+        configuration.addAllowedOriginPattern("http://www.api.coocian.com");
+        configuration.addAllowedOriginPattern("https://www.api.coocian.com");
+        configuration.addAllowedOriginPattern("http://api.coocian.com");
+        configuration.addAllowedOriginPattern("https://api.coocian.com");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
