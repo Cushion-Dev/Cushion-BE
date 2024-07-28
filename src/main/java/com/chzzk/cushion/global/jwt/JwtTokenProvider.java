@@ -85,7 +85,7 @@ public class JwtTokenProvider {
         String cookieName = "refreshToken";
         Cookie cookie = new Cookie(cookieName, refreshToken);
         cookie.setHttpOnly(false);
-        cookie.setSecure(false);
+        cookie.setSecure(true);
         cookie.setDomain("coocian.com");
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24); // accessToken 유효
@@ -96,7 +96,7 @@ public class JwtTokenProvider {
         String cookieName = "accessToken";
         Cookie cookie = new Cookie(cookieName, accessToken);
         cookie.setHttpOnly(false);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setDomain("coocian.com");
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
@@ -107,13 +107,14 @@ public class JwtTokenProvider {
         String cookieName = "memberId";
         Cookie cookie = new Cookie(cookieName, memberId.toString());
         cookie.setHttpOnly(false);
-        cookie.setSecure(false); // TODO : HTTPS 적용 시 적용 가능
+        cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setDomain("coocian.com");
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
     }
 
+    /*
     public static Cookie createTestCookie1(Long memberId) {
         String cookieName = "test1";
         Cookie cookie = new Cookie(cookieName, memberId.toString());
@@ -289,16 +290,18 @@ public class JwtTokenProvider {
         cookie.setMaxAge(60 * 60 * 24);
         return cookie;
     }
+    */
 
     public static Cookie createRealTestCookie(String accessToken) {
         String cookieName = "accessToken2";
         Cookie cookie = new Cookie(cookieName, accessToken);
-        cookie.setHttpOnly(false);
-        cookie.setSecure(false);
-        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath(".coocian.com");
         cookie.setMaxAge(60 * 60 * 2400); // accessToken 유효
         return cookie;
     }
+
 
     public Authentication getAuthenticationByToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
