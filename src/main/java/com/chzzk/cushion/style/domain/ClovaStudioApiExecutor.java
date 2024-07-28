@@ -126,6 +126,12 @@ public class ClovaStudioApiExecutor {
                         if (substring.equals(removeString)) {
                             return resultContent.replace(substring, "");
                         }
+                        if (substring.equals("변환 : ")) {
+                            return resultContent.replace("변환 : ", "");
+                        }
+                        if (substring.equals("성격 : ")) {
+                            return resultContent.replace("성격 : ", "");
+                        }
                         return resultContent;
                     }
                 }
