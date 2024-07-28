@@ -102,6 +102,7 @@ public class JwtTokenProvider {
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         if (redirectUrlNewMember.equals("http://localhost:8081")) {
             cookie.setDomain("localhost");
+            cookie.setSecure(false);
         } else {
             cookie.setDomain("coocian.com");
         }
