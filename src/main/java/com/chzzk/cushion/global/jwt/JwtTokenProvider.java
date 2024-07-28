@@ -80,7 +80,7 @@ public class JwtTokenProvider {
     public static Cookie createCookie(String refreshToken) {
         String cookieName = "refreshToken";
         Cookie cookie = new Cookie(cookieName, refreshToken);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24); // accessToken 유효
@@ -91,7 +91,7 @@ public class JwtTokenProvider {
     public static Cookie createAccessCookie(String accessToken) {
         String cookieName = "accessToken";
         Cookie cookie = new Cookie(cookieName, accessToken);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
@@ -102,7 +102,7 @@ public class JwtTokenProvider {
     public static Cookie createMemberIdCookie(Long memberId) {
         String cookieName = "memberId";
         Cookie cookie = new Cookie(cookieName, memberId.toString());
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24);
