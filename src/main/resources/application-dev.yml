@@ -18,11 +18,11 @@ spring:
       client:
         registration:
           google:
-            redirect-uri: http://api.coocian.com/login/oauth2/code/google
+            redirect-uri: https://api.coocian.com/login/oauth2/code/google
           naver:
-            redirect-uri: https://talk-cushion.kro.kr/login/oauth2/code/naver
+            redirect-uri: https://api.coocian.com/login/oauth2/code/naver
           kakao:
-            redirect-uri: https://talk-cushion.kro.kr/login/oauth2/code/kakao
+            redirect-uri: https://api.coocian.com/login/oauth2/code/kakao
 
 logging:
     level:
