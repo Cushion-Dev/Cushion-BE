@@ -12,10 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,6 +38,16 @@ public class JwtTokenProvider {
     private static String redirectUrlNewMember;
 
     private final MyUserDetailService myUserDetailService;
+
+
+    @Value("${oauth2.success.redirect-url-new}")
+    private void setRedirectUrlNewMember(String redirectUrlNewMember) {
+        JwtTokenProvider.redirectUrlNewMember = redirectUrlNewMember;
+    }
+
+    public static String getRedirectUrlNewMember() {
+        return redirectUrlNewMember;
+    }
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
@@ -100,8 +106,7 @@ public class JwtTokenProvider {
         Cookie cookie = new Cookie(cookieName, accessToken);
         cookie.setHttpOnly(false);
         cookie.setSecure(true); // TODO : HTTPS 적용 시 적용 가능
-        if (redirectUrlNewMember.equals("http://localhost:8081")) {
-            cookie.setDomain("localhost");
+        if (getRedirectUrlNewMember().equals("http://localhost:8081")) {
             cookie.setSecure(false);
         } else {
             cookie.setDomain("coocian.com");
@@ -313,7 +318,6 @@ public class JwtTokenProvider {
     }
 
      */
-
 
     public Authentication getAuthenticationByToken(String token) {
         Claims claims = Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token).getBody();
