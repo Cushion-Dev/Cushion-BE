@@ -50,7 +50,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         response.addCookie(createAccessCookie(accessToken));
         response.addCookie(createMemberIdCookie(member.getId()));
 
-        response.setHeader("Set-Cookie", "Bearer + " + refreshToken + "; Secure; SameSite=None; Domain=www.coocian.com; Max-Age=2592000");
+        response.setHeader("Set-Cookie", refreshToken + "; Secure; SameSite=None; Domain=www.coocian.com; Max-Age=2592000");
 
         if (isNew) {
             response.sendRedirect(redirectUrlNewMember);
