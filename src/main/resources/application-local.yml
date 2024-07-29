@@ -29,5 +29,5 @@ server:
 
 oauth2:
   success:
-    redirect-url-new: http://localhost:3000
-    redirect-url-existing: http://localhost:3000
+    redirect-url-new: http://localhost:8081
+    redirect-url-existing: http://localhost:8081/
