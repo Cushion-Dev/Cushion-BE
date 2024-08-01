@@ -122,15 +122,15 @@ public class ClovaStudioApiExecutor {
                     JsonNode messageNode = rootNode.get("message");
                     if (messageNode != null) {
                         String resultContent = messageNode.get("content").asText();
+                        if (resultContent.contains("변환 : ")) {
+                            return resultContent.replace("변환 : ", "");
+                        }
+                        if (resultContent.contains("성격 : ")) {
+                            return resultContent.replace("성격 : ", "");
+                        }
                         String substring = resultContent.substring(0, removeString.length());
                         if (substring.equals(removeString)) {
                             return resultContent.replace(substring, "");
-                        }
-                        if (substring.equals("변환 : ")) {
-                            return resultContent.replace("변환 : ", "");
-                        }
-                        if (substring.equals("성격 : ")) {
-                            return resultContent.replace("성격 : ", "");
                         }
                         return resultContent;
                     }
