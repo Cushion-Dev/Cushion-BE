@@ -89,6 +89,7 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("https://www.api.coocian.com");
         configuration.addAllowedOriginPattern("http://api.coocian.com");
         configuration.addAllowedOriginPattern("https://api.coocian.com");
+        configuration.addAllowedHeader("*");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
