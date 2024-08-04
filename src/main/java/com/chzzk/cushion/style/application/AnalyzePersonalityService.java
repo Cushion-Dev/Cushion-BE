@@ -10,6 +10,7 @@ import com.chzzk.cushion.style.dto.AnalyzePersonalityRequest;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class AnalyzePersonalityService {
     private final ClovaApiRequestDataGenerator clovaApiRequestDataGenerator;
     private final ClovaStudioApiExecutor clovaStudioApiExecutor;
 
+    @Transactional
     public void analyzePersonality(ApiMember apiMember,
                                    AnalyzePersonalityRequest analyzePersonalityRequest) {
         Member member = apiMember.toMember(memberRepository);

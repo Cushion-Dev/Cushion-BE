@@ -42,6 +42,7 @@ public class ChatRoom extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Relationship partnerRel;
 
+    @Column(columnDefinition = "TEXT")
     private String personality;
 
     private LocalDateTime lastUsedAt;

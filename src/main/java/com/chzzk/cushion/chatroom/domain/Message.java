@@ -4,12 +4,7 @@ import com.chzzk.cushion.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
@@ -27,6 +22,7 @@ public class Message extends BaseTimeEntity {
     private ChatRoom chatRoom;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @NotNull
