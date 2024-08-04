@@ -43,12 +43,9 @@ public class MemberService {
     }
 
     @Transactional
-    public RedirectView deleteMember(HttpServletRequest request, HttpServletResponse response, ApiMember apiMember) {
+    public void deleteMember(ApiMember apiMember) {
         Member member = apiMember.toMember(memberRepository);
         memberRepository.delete(member);
-
-        clearCookies(request, response);
-        return new RedirectView("https://www.coocian.com");
     }
 
     private void clearCookies(HttpServletRequest request, HttpServletResponse response) {

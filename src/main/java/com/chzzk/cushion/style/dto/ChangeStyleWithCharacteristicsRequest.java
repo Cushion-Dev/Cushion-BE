@@ -24,4 +24,12 @@ public class ChangeStyleWithCharacteristicsRequest {
     @NotBlank(message = "변환할 문장은 공백을 허용하지 않습니다.")
     @Size(max = 400, message = "변환할 문장의 길이는 0에서 400 사이여야 합니다.")
     private String userMessage;
+
+    @Schema(description = "새로고침 여부", example = "true")
+    @NotNull(message = "새로고침 여부는 필수입니다.")
+    private Boolean isRetry;
+
+    public boolean isFirstTry() {
+        return !isRetry;
+    }
 }

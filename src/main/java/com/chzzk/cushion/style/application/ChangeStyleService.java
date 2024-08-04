@@ -31,16 +31,25 @@ public class ChangeStyleService {
         Member member = apiMember.toMember(memberRepository);
         ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
 
-        // 사용자가 입력한 변환 전 메시지 저장
-        saveUserMessage(chatRoom, request.getUserMessage());
+        if (request.isFirstTry()) {
+            // 사용자가 입력한 변환 전 메시지 저장
+            saveUserMessage(chatRoom, request.getUserMessage());
+        }
 
         JSONObject requestData = clovaApiRequestDataGenerator
                 .generateWithUserMessage(member, request.getUserMessage(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
-        Message messageEntity = saveBotMessage(chatRoom, resultMessage);
-        chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
+        if (request.isFirstTry()) {
+            Message messageEntity = saveBotMessage(chatRoom, resultMessage);
+            chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
+            return resultMessage;
+        }
 
+        Message latestMessage = messageRepository.findLatestMessageByChatRoomId(request.getRoomId());
+        latestMessage.updateContent(resultMessage);
+        messageRepository.flush();
+        chatRoom.updateLastUsedAt(latestMessage.getUpdatedAt());
         return resultMessage;
     }
 
@@ -82,16 +91,25 @@ public class ChangeStyleService {
         Member member = apiMember.toMember(memberRepository);
         ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
 
-        // 사용자가 입력한 변환 전 메시지 저장
-        saveUserMessage(chatRoom, request.getUserMessage());
+        if (request.isFirstTry()) {
+            // 사용자가 입력한 변환 전 메시지 저장
+            saveUserMessage(chatRoom, request.getUserMessage());
+        }
 
         JSONObject requestData = clovaApiRequestDataGenerator
                 .generateWithUserMessageAndCharacteristics(member, request.getUserMessage(), request.getCharacteristics(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
-        Message messageEntity = saveBotMessage(chatRoom, resultMessage);
-        chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
+        if (request.isFirstTry()) {
+            Message messageEntity = saveBotMessage(chatRoom, resultMessage);
+            chatRoom.updateLastUsedAt(messageEntity.getCreatedAt());
+            return resultMessage;
+        }
 
+        Message latestMessage = messageRepository.findLatestMessageByChatRoomId(request.getRoomId());
+        latestMessage.updateContent(resultMessage);
+        messageRepository.flush();
+        chatRoom.updateLastUsedAt(latestMessage.getUpdatedAt());
         return resultMessage;
     }
 }
