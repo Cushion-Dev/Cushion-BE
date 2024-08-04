@@ -1,6 +1,8 @@
 package com.chzzk.cushion.chatroom.domain;
 
 import com.chzzk.cushion.global.common.BaseTimeEntity;
+import com.chzzk.cushion.global.exception.CushionException;
+import com.chzzk.cushion.global.exception.ErrorCode;
 import com.chzzk.cushion.member.domain.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -66,5 +68,13 @@ public class ChatRoom extends BaseTimeEntity {
 
     public void updatePersonality(String personality) {
         this.personality = personality;
+    }
+
+    public Message getLatestMessage(SenderType senderType) {
+        return messages.stream()
+                .sorted((m1, m2) -> m2.getUpdatedAt().compareTo(m1.getUpdatedAt()))
+                .filter(message -> message.getSenderType().equals(senderType))
+                .findFirst()
+                .orElseThrow(() -> new CushionException(ErrorCode.NOT_FOUND_MESSAGE));
     }
 }

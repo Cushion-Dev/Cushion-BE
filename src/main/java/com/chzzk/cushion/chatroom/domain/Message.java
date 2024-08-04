@@ -28,4 +28,8 @@ public class Message extends BaseTimeEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     private SenderType senderType;
+
+    public void updateContent(String newContent) {
+        this.content = newContent;
+    }
 }

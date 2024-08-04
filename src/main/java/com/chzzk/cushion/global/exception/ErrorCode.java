@@ -33,7 +33,7 @@ public enum ErrorCode {
     NOT_FOUND_MEMBER(NOT_FOUND, "존재하지 않는 회원입니다."),
     NOT_FOUND_CHAT_ROOM(NOT_FOUND, "존재하지 않는 채팅방입니다."),
     NOT_FOUND_CHAT_ROOM_THAT_MEMBER(NOT_FOUND, "해당 회원에게 존재하지 않는 채팅방입니다."),
-
+    NOT_FOUND_MESSAGE(NOT_FOUND, "채팅방에 메시지가 존재하지 않습니다."),
 
     // 409
     ALREADY_REGISTERED_EMAIL(CONFLICT, "이미 등록된 이메일입니다.");
