@@ -19,13 +19,15 @@ public class AnalyzePersonalityService {
     private final ClovaApiRequestDataGenerator clovaApiRequestDataGenerator;
     private final ClovaStudioApiExecutor clovaStudioApiExecutor;
 
-    public String analyzePersonality(ApiMember apiMember,
-                                     AnalyzePersonalityRequest analyzePersonalityRequest) {
+    public void analyzePersonality(ApiMember apiMember,
+                                   AnalyzePersonalityRequest analyzePersonalityRequest) {
         Member member = apiMember.toMember(memberRepository);
         ChatRoom chatRoom = member.findChatRoomById(analyzePersonalityRequest.getRoomId());
 
         JSONObject requestData = clovaApiRequestDataGenerator
                 .generateWithConversation(member, analyzePersonalityRequest.getConversation(), chatRoom);
-        return clovaStudioApiExecutor.analyzePersonality(requestData);
+        String personality = clovaStudioApiExecutor.analyzePersonality(requestData);
+
+        chatRoom.updatePersonality(personality);
     }
 }

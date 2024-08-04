@@ -42,6 +42,8 @@ public class ChatRoom extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Relationship partnerRel;
 
+    private String personality;
+
     private LocalDateTime lastUsedAt;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
@@ -59,5 +61,9 @@ public class ChatRoom extends BaseTimeEntity {
         this.partnerName = partnerName;
         this.partnerRel = partnerRel;
         this.title = "%s(%s)님과의 쿠션".formatted(partnerName, partnerRel.getLabel());
+    }
+
+    public void updatePersonality(String personality) {
+        this.personality = personality;
     }
 }

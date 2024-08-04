@@ -24,8 +24,8 @@ public class AnalyzePersonalityServiceController {
 
     @Operation(summary = "성격 분석", description = "OCR을 이용해 추출한 대화 내용으로 상대방의 성격을 분석합니다.")
     @PostMapping
-    public String analyzeTendency(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
-                                  @Valid @RequestBody AnalyzePersonalityRequest analyzePersonalityRequest) {
-        return analyzePersonalityService.analyzePersonality(apiMember, analyzePersonalityRequest);
+    public void analyzeTendency(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
+                                @Valid @RequestBody AnalyzePersonalityRequest analyzePersonalityRequest) {
+        analyzePersonalityService.analyzePersonality(apiMember, analyzePersonalityRequest);
     }
 }
