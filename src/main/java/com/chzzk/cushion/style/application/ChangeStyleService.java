@@ -11,7 +11,7 @@ import com.chzzk.cushion.member.dto.ApiMember;
 import com.chzzk.cushion.style.domain.ClovaApiRequestDataGenerator;
 import com.chzzk.cushion.style.domain.ClovaStudioApiExecutor;
 import com.chzzk.cushion.style.dto.ChangeStyleRequest;
-import com.chzzk.cushion.style.dto.ChangeStyleWithCharacteristicsRequest;
+import com.chzzk.cushion.style.dto.ChangeStyleWithPersonalityRequest;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -77,8 +77,8 @@ public class ChangeStyleService {
     }
 
     @Transactional
-    public String changeStyleWithCharacteristics(ApiMember apiMember,
-                                                 ChangeStyleWithCharacteristicsRequest request) {
+    public String changeStyleWithPersonality(ApiMember apiMember,
+                                             ChangeStyleWithPersonalityRequest request) {
         Member member = apiMember.toMember(memberRepository);
         ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
 
@@ -86,7 +86,7 @@ public class ChangeStyleService {
         saveUserMessage(chatRoom, request.getUserMessage());
 
         JSONObject requestData = clovaApiRequestDataGenerator
-                .generateWithUserMessageAndCharacteristics(member, request.getUserMessage(), request.getCharacteristics(), chatRoom);
+                .generateWithUserMessageAndPersonality(member, request.getUserMessage(), request.getPersonality(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
         Message messageEntity = saveBotMessage(chatRoom, resultMessage);

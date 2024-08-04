@@ -48,7 +48,7 @@ public class ClovaStudioApiExecutor {
         }
     }
 
-    public String analyzeCharacteristics(JSONObject requestData) {
+    public String analyzePersonality(JSONObject requestData) {
         try {
             // API 요청 전송
             URL url = new URL(apiUrl);

@@ -10,7 +10,7 @@ import lombok.Data;
 @Schema(description = "상대방 성격을 이용한 문체 변환 요청")
 @Data
 @AllArgsConstructor
-public class ChangeStyleWithCharacteristicsRequest {
+public class ChangeStyleWithPersonalityRequest {
 
     @Schema(description = "채팅방 ID", example = "1")
     @NotNull(message = "채팅방 ID는 필수입니다.")
@@ -18,7 +18,7 @@ public class ChangeStyleWithCharacteristicsRequest {
 
     @Schema(description = "상대방 성격", example = "적극적이고 논리적인 성격으로 보입니다. ...")
     @NotBlank(message = "상대방 성격은 공백을 허용하지 않습니다.")
-    private String characteristics;
+    private String personality;
 
     @Schema(description = "변환할 문장", example = "안녕하세요. 이것좀 변환해주삼")
     @NotBlank(message = "변환할 문장은 공백을 허용하지 않습니다.")

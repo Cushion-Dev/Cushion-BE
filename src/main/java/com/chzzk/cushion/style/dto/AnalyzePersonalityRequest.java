@@ -9,7 +9,7 @@ import lombok.Data;
 @Schema(description = "성격 분석 요청")
 @Data
 @AllArgsConstructor
-public class AnalyzeCharacteristicsRequest {
+public class AnalyzePersonalityRequest {
 
     @Schema(description = "채팅방 ID", example = "1")
     @NotNull(message = "채팅방 ID는 필수입니다.")
