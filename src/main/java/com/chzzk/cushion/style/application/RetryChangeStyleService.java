@@ -28,8 +28,8 @@ public class RetryChangeStyleService {
     public String retryChangeStyle(ApiMember apiMember, RetryChangeStyleRequest request) {
         Member member = apiMember.toMember(memberRepository);
         ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
-
         Message latestUserMessage = chatRoom.getLatestMessage(USER);
+
         JSONObject requestData = clovaApiRequestDataGenerator
                 .generateWithUserMessage(member, latestUserMessage.getContent(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
