@@ -65,13 +65,12 @@ public class ClovaApiRequestDataGenerator {
 
         JSONObject user = new JSONObject();
         user.put("role", "user");
-        user.put("content", createUserMessageForChangingStyle(member, chatRoom, sentence, null));
+        user.put("content", createUserMessageForChangingStyle(member, chatRoom, sentence, false));
 
         return getRequestData(system, user);
     }
 
-    public JSONObject generateWithUserMessageAndPersonality(Member member, String sentence,
-                                                            String personality, ChatRoom chatRoom) {
+    public JSONObject generateWithUserMessageAndPersonality(Member member, String sentence, ChatRoom chatRoom) {
         String promptSystemMessage = "- 당신의 역할은 문장을 부드럽고 정중하게 변환하는 것입니다.\n" +
                 "- 상대방 관계와 성격을 바탕으로 적절한 단어와 문체를 선택해주세요.\n" +
                 "- 다까체 70% + 요죠체 30% 정도로 적절하게 분배합니다.\n" +
@@ -131,7 +130,7 @@ public class ClovaApiRequestDataGenerator {
 
         JSONObject user = new JSONObject();
         user.put("role", "user");
-        user.put("content", createUserMessageForChangingStyle(member, chatRoom, sentence, personality));
+        user.put("content", createUserMessageForChangingStyle(member, chatRoom, sentence, true));
 
         return getRequestData(system, user);
     }
@@ -274,14 +273,14 @@ public class ClovaApiRequestDataGenerator {
     }
 
     private String createUserMessageForChangingStyle(Member member, ChatRoom chatRoom, String userMessage,
-                                                     String personality) {
+                                                     boolean hasPersonality) {
         StringBuffer sb = new StringBuffer();
         sb.append("사용자 이름: ").append(member.getRealName()).append("\n");
         sb.append("사용자 소속: ").append(member.getAffiliation()).append("\n");
         sb.append("사용자 직무: ").append(member.getJob()).append("\n");
         sb.append("상대방 이름: ").append(chatRoom.getPartnerName()).append("\n");
         sb.append("상대방 관계: ").append(chatRoom.getPartnerRel().getLabel()).append("\n");
-        if (personality != null) {
+        if (hasPersonality) {
             sb.append("상대방 성격: ").append(userMessage).append("\n");
         }
         sb.append("문장: ").append(userMessage).append("\n");
