@@ -25,14 +25,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
 
         clearCookies(request, response);
-        return new RedirectView("https://www.coocian.com"); // 로그아웃 후 리디렉션할 URL
     }
 
     @Transactional
