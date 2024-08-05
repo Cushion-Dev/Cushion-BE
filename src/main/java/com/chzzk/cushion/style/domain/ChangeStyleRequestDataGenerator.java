@@ -144,7 +144,7 @@ public class ChangeStyleRequestDataGenerator {
         sb.append("상대방 이름: ").append(chatRoom.getPartnerName()).append("\n");
         sb.append("상대방 관계: ").append(chatRoom.getPartnerRel().getLabel()).append("\n");
         if (hasPersonality) {
-            sb.append("상대방 성격: ").append(userMessage).append("\n");
+            sb.append("상대방 성격: ").append(chatRoom.getPersonality()).append("\n");
         }
         sb.append("문장: ").append(userMessage).append("\n");
         return sb.toString();
