@@ -33,13 +33,9 @@ public class RetryChangeStyleService {
         Message latestUserMessage = chatRoom.getLatestMessage(USER);
         Message latestBotMessage = chatRoom.getLatestMessage(BOT);
 
-        JSONObject requestData = retryChangeStyleRequestDataGenerator
-                .generateWithUserMessage(
-                        member,
-                        latestUserMessage.getContent(),
-                        latestBotMessage.getContent(),
-                        chatRoom);
+        JSONObject requestData = getRequestData(request.withPersonality(), member, chatRoom, latestUserMessage, latestBotMessage);
         log.info("requestData = {}", requestData.toJSONString());
+
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
         latestBotMessage.updateContent(resultMessage);
@@ -47,24 +43,31 @@ public class RetryChangeStyleService {
         return resultMessage;
     }
 
-    @Transactional
-    public String retryChangeStyleWithPersonality(ApiMember apiMember, RetryChangeStyleRequest request) {
-        Member member = apiMember.toMember(memberRepository);
-        ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
-        Message latestUserMessage = chatRoom.getLatestMessage(USER);
-        Message latestBotMessage = chatRoom.getLatestMessage(BOT);
+    private JSONObject getRequestData(boolean withPersonality,
+                                      Member member,
+                                      ChatRoom chatRoom,
+                                      Message latestUserMessage,
+                                      Message latestBotMessage) {
+        return withPersonality ?
+                getRequestDataWithPersonality(member, chatRoom, latestUserMessage, latestBotMessage) :
+                getRequestData(member, chatRoom, latestUserMessage, latestBotMessage);
+    }
 
-        JSONObject requestData = retryChangeStyleRequestDataGenerator
+    private JSONObject getRequestDataWithPersonality(Member member, ChatRoom chatRoom, Message latestUserMessage, Message latestBotMessage) {
+        return retryChangeStyleRequestDataGenerator
                 .generateWithUserMessageAndPersonality(
                         member,
                         latestUserMessage.getContent(),
                         latestBotMessage.getContent(),
                         chatRoom);
-        log.info("requestData = {}", requestData.toJSONString());
-        String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
+    }
 
-        latestBotMessage.updateContent(resultMessage);
-
-        return resultMessage;
+    private JSONObject getRequestData(Member member, ChatRoom chatRoom, Message latestUserMessage, Message latestBotMessage) {
+        return retryChangeStyleRequestDataGenerator
+                .generateWithUserMessage(
+                        member,
+                        latestUserMessage.getContent(),
+                        latestBotMessage.getContent(),
+                        chatRoom);
     }
 }

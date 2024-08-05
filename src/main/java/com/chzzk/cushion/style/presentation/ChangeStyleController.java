@@ -28,11 +28,4 @@ public class ChangeStyleController {
                               @Valid @RequestBody ChangeStyleRequest changeStyleRequest) {
         return changeStyleService.changeStyle(apiMember, changeStyleRequest);
     }
-
-    @Operation(summary = "상대방 성격을 이용한 문체 변환", description = "상대방 성격을 이용해 문체를 변환합니다.")
-    @PostMapping("/personality")
-    public String changeStyleWithPersonality(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
-                              @Valid @RequestBody ChangeStyleRequest changeStyleRequest) {
-        return changeStyleService.changeStyleWithPersonality(apiMember, changeStyleRequest);
-    }
 }
