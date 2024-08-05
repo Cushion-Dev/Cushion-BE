@@ -25,14 +25,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
         if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
 
         clearCookies(request, response);
-        return new RedirectView("https://www.coocian.com"); // 로그아웃 후 리디렉션할 URL
     }
 
     @Transactional
@@ -43,12 +42,11 @@ public class MemberService {
     }
 
     @Transactional
-    public RedirectView deleteMember(HttpServletRequest request, HttpServletResponse response, ApiMember apiMember) {
+    public void deleteMember(HttpServletRequest request, HttpServletResponse response, ApiMember apiMember) {
         Member member = apiMember.toMember(memberRepository);
         memberRepository.delete(member);
 
         clearCookies(request, response);
-        return new RedirectView("https://www.coocian.com");
     }
 
     private void clearCookies(HttpServletRequest request, HttpServletResponse response) {
@@ -58,6 +56,7 @@ public class MemberService {
                 log.info("쿠키 이름: {}, 쿠키 값: {}", cookie.getName(), cookie.getValue());
                 cookie.setValue("");
                 cookie.setPath("/");
+                cookie.setDomain("coocian.com");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }

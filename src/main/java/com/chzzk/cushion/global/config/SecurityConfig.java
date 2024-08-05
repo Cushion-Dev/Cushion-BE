@@ -17,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
@@ -65,6 +66,14 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler)
                 );
+                /*
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
+                        .logoutSuccessUrl("https://www.coocian.com")
+                        .deleteCookies("Authorization", "refreshToken", "JSESSIONID", "accessToken")
+                        .invalidateHttpSession(true));
+
+                 */
 
         return http.build();
     }
@@ -89,7 +98,25 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("https://www.api.coocian.com");
         configuration.addAllowedOriginPattern("http://api.coocian.com");
         configuration.addAllowedOriginPattern("https://api.coocian.com");
-        configuration.addAllowedHeader("*");
+        configuration.addAllowedHeader("Accept");
+        configuration.addAllowedHeader("Authorization");
+        configuration.addAllowedHeader("refreshToken");
+        configuration.addAllowedHeader("Content-Type");
+        configuration.addAllowedHeader("Origin");
+        configuration.addAllowedHeader("Cookie");
+        configuration.addAllowedHeader("X-Requested-With");
+        configuration.addAllowedHeader("Access-Control-Allow-Origin");
+        configuration.addAllowedHeader("Access-Control-Allow-Credentials");
+        configuration.addAllowedHeader("Access-Control-Allow-Methods");
+        configuration.addAllowedHeader("Access-Control-Allow-Headers");
+        configuration.addAllowedHeader("Host");
+        configuration.addAllowedHeader("Connection");
+        configuration.addAllowedHeader("Accept-Encoding");
+        configuration.addAllowedHeader("Accept-Language");
+        configuration.addAllowedHeader("Referer");
+        configuration.addAllowedHeader("User-Agent");
+        configuration.addAllowedHeader("Sec-Fetch-Mode");
+        configuration.addAllowedHeader("Sec-Fetch-Site");
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("refreshToken");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));

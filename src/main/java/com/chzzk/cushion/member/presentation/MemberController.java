@@ -51,8 +51,8 @@ public class MemberController {
 
     @PostMapping("/logout")
     @Operation(summary = "로그아웃", description = "소셜 로그인한 계정을 로그아웃합니다.")
-    public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        return memberService.logout(request, response, authentication);
+    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+        memberService.logout(request, response, authentication);
     }
 
     @PostMapping("/my-info")
@@ -71,7 +71,8 @@ public class MemberController {
 
     @DeleteMapping
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴를 진행합니다.")
-    public RedirectView deleteMember(HttpServletRequest request, HttpServletResponse response, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
-        return memberService.deleteMember(request, response, apiMember);
+    public void deleteMember(HttpServletRequest request, HttpServletResponse response, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+        memberService.deleteMember(request, response, apiMember);
+
     }
 }
