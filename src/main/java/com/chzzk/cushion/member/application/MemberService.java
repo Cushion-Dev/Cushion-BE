@@ -42,12 +42,11 @@ public class MemberService {
     }
 
     @Transactional
-    public HttpServletResponse deleteMember(HttpServletRequest request, HttpServletResponse response, ApiMember apiMember) {
+    public void deleteMember(HttpServletRequest request, HttpServletResponse response, ApiMember apiMember) {
         Member member = apiMember.toMember(memberRepository);
         memberRepository.delete(member);
 
         clearCookies(request, response);
-        return response;
     }
 
     private void clearCookies(HttpServletRequest request, HttpServletResponse response) {

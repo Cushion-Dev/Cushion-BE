@@ -71,8 +71,8 @@ public class MemberController {
 
     @DeleteMapping
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴를 진행합니다.")
-    public HttpServletResponse deleteMember(HttpServletRequest request, HttpServletResponse response, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
-        return memberService.deleteMember(request, response, apiMember);
+    public void deleteMember(HttpServletRequest request, HttpServletResponse response, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
+        memberService.deleteMember(request, response, apiMember);
 
     }
 }
