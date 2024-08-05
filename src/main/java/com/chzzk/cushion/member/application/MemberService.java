@@ -58,6 +58,7 @@ public class MemberService {
                 log.info("쿠키 이름: {}, 쿠키 값: {}", cookie.getName(), cookie.getValue());
                 cookie.setValue("");
                 cookie.setPath("/");
+                cookie.setDomain("coocian.com");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
