@@ -65,12 +65,15 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService))
                         .successHandler(customSuccessHandler)
-                )
+                );
+                /*
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("https://www.coocian.com")
                         .deleteCookies("Authorization", "refreshToken", "JSESSIONID", "accessToken")
                         .invalidateHttpSession(true));
+
+                 */
 
         return http.build();
     }
