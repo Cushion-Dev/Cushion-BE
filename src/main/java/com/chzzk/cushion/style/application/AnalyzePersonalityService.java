@@ -4,7 +4,7 @@ import com.chzzk.cushion.chatroom.domain.ChatRoom;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
-import com.chzzk.cushion.style.domain.ClovaApiRequestDataGenerator;
+import com.chzzk.cushion.style.domain.AnalyzePersonalityRequestDataGenerator;
 import com.chzzk.cushion.style.domain.ClovaStudioApiExecutor;
 import com.chzzk.cushion.style.dto.AnalyzePersonalityRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AnalyzePersonalityService {
 
     private final MemberRepository memberRepository;
-    private final ClovaApiRequestDataGenerator clovaApiRequestDataGenerator;
+    private final AnalyzePersonalityRequestDataGenerator clovaApiRequestDataGenerator;
     private final ClovaStudioApiExecutor clovaStudioApiExecutor;
 
     @Transactional

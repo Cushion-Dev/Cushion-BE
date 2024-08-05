@@ -5,7 +5,7 @@ import com.chzzk.cushion.chatroom.domain.Message;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
-import com.chzzk.cushion.style.domain.ClovaApiRequestDataGenerator;
+import com.chzzk.cushion.style.domain.ChangeStyleRequestDataGenerator;
 import com.chzzk.cushion.style.domain.ClovaStudioApiExecutor;
 import com.chzzk.cushion.style.dto.RetryChangeStyleRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import static com.chzzk.cushion.chatroom.domain.SenderType.USER;
 public class RetryChangeStyleService {
 
     private final MemberRepository memberRepository;
-    private final ClovaApiRequestDataGenerator clovaApiRequestDataGenerator;
+    private final ChangeStyleRequestDataGenerator changeStyleRequestDataGenerator;
     private final ClovaStudioApiExecutor clovaStudioApiExecutor;
 
     @Transactional
@@ -30,7 +30,7 @@ public class RetryChangeStyleService {
         ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
         Message latestUserMessage = chatRoom.getLatestMessage(USER);
 
-        JSONObject requestData = clovaApiRequestDataGenerator
+        JSONObject requestData = changeStyleRequestDataGenerator
                 .generateWithUserMessage(member, latestUserMessage.getContent(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
@@ -46,7 +46,7 @@ public class RetryChangeStyleService {
         ChatRoom chatRoom = member.findChatRoomById(request.getRoomId());
         Message latestUserMessage = chatRoom.getLatestMessage(USER);
 
-        JSONObject requestData = clovaApiRequestDataGenerator
+        JSONObject requestData = changeStyleRequestDataGenerator
                 .generateWithUserMessageAndPersonality(member, latestUserMessage.getContent(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 

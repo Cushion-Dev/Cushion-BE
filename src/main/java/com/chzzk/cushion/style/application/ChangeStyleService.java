@@ -8,7 +8,7 @@ import com.chzzk.cushion.chatroom.domain.repository.MessageRepository;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
-import com.chzzk.cushion.style.domain.ClovaApiRequestDataGenerator;
+import com.chzzk.cushion.style.domain.ChangeStyleRequestDataGenerator;
 import com.chzzk.cushion.style.domain.ClovaStudioApiExecutor;
 import com.chzzk.cushion.style.dto.ChangeStyleRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChangeStyleService {
 
     private final ClovaStudioApiExecutor clovaStudioApiExecutor;
-    private final ClovaApiRequestDataGenerator clovaApiRequestDataGenerator;
+    private final ChangeStyleRequestDataGenerator changeStyleRequestDataGenerator;
     private final MemberRepository memberRepository;
     private final MessageRepository messageRepository;
 
@@ -33,7 +33,7 @@ public class ChangeStyleService {
         // 사용자가 입력한 변환 전 메시지 저장
         saveUserMessage(chatRoom, request.getUserMessage());
 
-        JSONObject requestData = clovaApiRequestDataGenerator
+        JSONObject requestData = changeStyleRequestDataGenerator
                 .generateWithUserMessage(member, request.getUserMessage(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
@@ -84,7 +84,7 @@ public class ChangeStyleService {
         // 사용자가 입력한 변환 전 메시지 저장
         saveUserMessage(chatRoom, request.getUserMessage());
 
-        JSONObject requestData = clovaApiRequestDataGenerator
+        JSONObject requestData = changeStyleRequestDataGenerator
                 .generateWithUserMessageAndPersonality(member, request.getUserMessage(), chatRoom);
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 
