@@ -49,12 +49,14 @@ public class MemberController {
         return new RedirectView("/oauth2/authorization/google");
     }
 
-    @PostMapping("/logout")
+    /*
+    @GetMapping("/logout")
     @Operation(summary = "로그아웃", description = "소셜 로그인한 계정을 로그아웃합니다.")
     public RedirectView logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         return memberService.logout(request, response, authentication);
     }
 
+     */
     @PostMapping("/my-info")
     @Operation(summary = "사용자 추가 정보 설정", description = "사용자의 추가 정보(소속, 직무, 이름)을 설정합니다.")
     public void saveAdditionalInfo(@Valid @RequestBody MemberDto memberDto,
