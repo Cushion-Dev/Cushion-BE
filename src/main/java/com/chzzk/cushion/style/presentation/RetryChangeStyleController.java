@@ -22,17 +22,10 @@ public class RetryChangeStyleController {
 
     private final RetryChangeStyleService retryChangeStyleService;
 
-    @Operation(summary = "문체 변환", description = "문체를 변환합니다.")
+    @Operation(summary = "문체 변환 새로고침", description = "문체 변환을 다시 시도합니다.")
     @PostMapping("/retry")
     public String changeStyle(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
                               @Valid @RequestBody RetryChangeStyleRequest request) {
         return retryChangeStyleService.retryChangeStyle(apiMember, request);
-    }
-
-    @Operation(summary = "상대방 성격을 이용한 문체 변환", description = "상대방 성격을 이용해 문체를 변환합니다.")
-    @PostMapping("/personality/retry")
-    public String changeStyleWithPersonality(@Parameter(hidden = true) @AuthPrincipal ApiMember apiMember,
-                                             @Valid @RequestBody RetryChangeStyleRequest request) {
-        return retryChangeStyleService.retryChangeStyleWithPersonality(apiMember, request);
     }
 }
