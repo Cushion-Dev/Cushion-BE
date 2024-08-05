@@ -34,8 +34,8 @@ public class ChangeStyleService {
         // 사용자가 입력한 변환 전 메시지 저장
         saveUserMessage(chatRoom, request.getUserMessage());
 
-        JSONObject requestData = request.withPersonality() ?
-                getRequestData(request, member, chatRoom) : getRequestDataWithPersonality(request, member, chatRoom);
+        JSONObject requestData = changeStyleRequestDataGenerator
+                .generate(member, request.getUserMessage(), chatRoom, request.withPersonality());
         log.info("requestData = {}", requestData.toJSONString());
 
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
@@ -49,16 +49,6 @@ public class ChangeStyleService {
     private void saveUserMessage(ChatRoom chatRoom, String resultMessage) {
         Message messageEntity = createUserMessageEntity(chatRoom, resultMessage);
         messageRepository.save(messageEntity);
-    }
-
-    private JSONObject getRequestData(ChangeStyleRequest request, Member member, ChatRoom chatRoom) {
-        return changeStyleRequestDataGenerator
-                .generateWithUserMessageAndPersonality(member, request.getUserMessage(), chatRoom);
-    }
-
-    private JSONObject getRequestDataWithPersonality(ChangeStyleRequest request, Member member, ChatRoom chatRoom) {
-        return changeStyleRequestDataGenerator
-                .generateWithUserMessage(member, request.getUserMessage(), chatRoom);
     }
 
     private Message saveBotMessage(ChatRoom chatRoom, String resultMessage) {

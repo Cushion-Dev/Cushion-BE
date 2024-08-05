@@ -33,7 +33,12 @@ public class RetryChangeStyleService {
         Message latestUserMessage = chatRoom.getLatestMessage(USER);
         Message latestBotMessage = chatRoom.getLatestMessage(BOT);
 
-        JSONObject requestData = getRequestData(request.withPersonality(), member, chatRoom, latestUserMessage, latestBotMessage);
+        JSONObject requestData = retryChangeStyleRequestDataGenerator.generate(
+                member,
+                latestUserMessage.getContent(),
+                latestBotMessage.getContent(),
+                chatRoom,
+                request.withPersonality());
         log.info("requestData = {}", requestData.toJSONString());
 
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
@@ -41,33 +46,5 @@ public class RetryChangeStyleService {
         latestBotMessage.updateContent(resultMessage);
 
         return resultMessage;
-    }
-
-    private JSONObject getRequestData(boolean withPersonality,
-                                      Member member,
-                                      ChatRoom chatRoom,
-                                      Message latestUserMessage,
-                                      Message latestBotMessage) {
-        return withPersonality ?
-                getRequestDataWithPersonality(member, chatRoom, latestUserMessage, latestBotMessage) :
-                getRequestData(member, chatRoom, latestUserMessage, latestBotMessage);
-    }
-
-    private JSONObject getRequestDataWithPersonality(Member member, ChatRoom chatRoom, Message latestUserMessage, Message latestBotMessage) {
-        return retryChangeStyleRequestDataGenerator
-                .generateWithUserMessageAndPersonality(
-                        member,
-                        latestUserMessage.getContent(),
-                        latestBotMessage.getContent(),
-                        chatRoom);
-    }
-
-    private JSONObject getRequestData(Member member, ChatRoom chatRoom, Message latestUserMessage, Message latestBotMessage) {
-        return retryChangeStyleRequestDataGenerator
-                .generateWithUserMessage(
-                        member,
-                        latestUserMessage.getContent(),
-                        latestBotMessage.getContent(),
-                        chatRoom);
     }
 }
