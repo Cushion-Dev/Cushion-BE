@@ -17,7 +17,7 @@ import static com.chzzk.cushion.prompt.domain.PromptType.*;
 @RequiredArgsConstructor
 public class RetryChangeStyleRequestDataGenerator {
 
-    private static final String RETRY_MESSAGE = "이전에 변환했던 문장과 다른 말투로 다시 변환해 주세요";
+    private static final String RETRY_MESSAGE = "이전에 변환했던 문장과 다른 말투로 다시 변환해 주세요. 그리고 변환한 문장만 출력해 주세요.";
 
     private final PromptReader promptReader;
 
