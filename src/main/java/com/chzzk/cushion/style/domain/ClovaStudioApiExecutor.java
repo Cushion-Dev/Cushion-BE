@@ -59,7 +59,7 @@ public class ClovaStudioApiExecutor {
             String responseData = getResponseData(connection);
 
             // 데이터 파싱
-            return parseResponseData(responseData, "성격: ");
+            return parseResponseData(responseData, "상대방 성격: ");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -128,11 +128,11 @@ public class ClovaStudioApiExecutor {
                         if (resultContent.contains("변환 :")) {
                             return resultContent.replace("변환 :", "");
                         }
-                        if (resultContent.contains("성격 : ")) {
-                            return resultContent.replace("성격 : ", "");
+                        if (resultContent.contains("상대방 성격 : ")) {
+                            return resultContent.replace("상대방 성격 : ", "");
                         }
-                        if (resultContent.contains("성격 :")) {
-                            return resultContent.replace("성격 :", "");
+                        if (resultContent.contains("상대방 성격 :")) {
+                            return resultContent.replace("상대방 성격 :", "");
                         }
                         String substring = resultContent.substring(0, removeString.length());
                         if (substring.equals(removeString)) {

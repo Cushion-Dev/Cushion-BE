@@ -5,12 +5,14 @@ import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.prompt.domain.Prompt;
 import com.chzzk.cushion.prompt.domain.PromptReader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import static com.chzzk.cushion.prompt.domain.PromptType.*;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AnalyzePersonalityRequestDataGenerator {
@@ -20,8 +22,6 @@ public class AnalyzePersonalityRequestDataGenerator {
     public JSONObject generateWithConversation(Member member, String conversation, ChatRoom chatRoom) {
         Prompt prompt = promptReader.readPrompt(ANALYZE_PERSONALITY);
         String promptSystemMessage = prompt.getSystemMessage();
-
-        System.out.println("promptSystemMessage = " + promptSystemMessage);
 
         JSONObject system = new JSONObject();
         system.put("role", "system");
@@ -42,6 +42,7 @@ public class AnalyzePersonalityRequestDataGenerator {
         sb.append("상대방 이름: ").append(chatRoom.getPartnerName()).append("\n");
         sb.append("상대방 관계: ").append(chatRoom.getPartnerRel().getLabel()).append("\n");
         sb.append("대화 내용: ").append(userMessage).append("\n");
+        sb.append("상대방 성격: ");
         return sb.toString();
     }
 
@@ -57,9 +58,12 @@ public class AnalyzePersonalityRequestDataGenerator {
         requestData.put("maxTokens", 500);
         requestData.put("temperature", 0.5);
         requestData.put("repeatPenalty", 5.0);
-        requestData.put("stopBefore", new JSONArray());
+        requestData.put("stopBefore", new String[] {"###"});
         requestData.put("includeAiFilters", true);
         requestData.put("seed", 0);
+
+        log.info("request data = {}", requestData.toJSONString());
+
         return requestData;
     }
 }
