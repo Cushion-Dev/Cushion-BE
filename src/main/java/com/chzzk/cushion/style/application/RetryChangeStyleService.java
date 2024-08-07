@@ -39,7 +39,6 @@ public class RetryChangeStyleService {
                 latestBotMessage.getContent(),
                 chatRoom,
                 request.withPersonality());
-        log.info("requestData = {}", requestData.toJSONString());
 
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 

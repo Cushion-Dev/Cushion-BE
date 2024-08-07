@@ -36,7 +36,6 @@ public class ChangeStyleService {
 
         JSONObject requestData = changeStyleRequestDataGenerator
                 .generate(member, request.getUserMessage(), chatRoom, request.withPersonality());
-        log.info("requestData = {}", requestData.toJSONString());
 
         String resultMessage = clovaStudioApiExecutor.changeStyleDefault(requestData);
 

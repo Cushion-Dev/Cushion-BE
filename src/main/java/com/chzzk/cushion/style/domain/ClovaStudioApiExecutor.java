@@ -106,7 +106,6 @@ public class ClovaStudioApiExecutor {
     }
 
     private String parseResponseData(String responseData, String removeString) throws JsonProcessingException {
-        log.info("response data = {}", responseData);
         ObjectMapper objectMapper = new ObjectMapper();
         String[] parts = responseData.split("id:");
 
@@ -122,6 +121,7 @@ public class ClovaStudioApiExecutor {
                     JsonNode messageNode = rootNode.get("message");
                     if (messageNode != null) {
                         String resultContent = messageNode.get("content").asText();
+                        log.info("response content = {}", resultContent);
                         if (resultContent.contains("변환 : ")) {
                             return resultContent.replace("변환 : ", "");
                         }
