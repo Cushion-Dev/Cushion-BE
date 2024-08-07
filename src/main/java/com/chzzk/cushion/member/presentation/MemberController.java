@@ -1,5 +1,6 @@
 package com.chzzk.cushion.member.presentation;
 
+import com.chzzk.cushion.global.jwt.JwtTokenProvider;
 import com.chzzk.cushion.global.utils.AuthPrincipal;
 import com.chzzk.cushion.member.application.MemberService;
 import com.chzzk.cushion.member.dto.ApiMember;
@@ -13,13 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Slf4j
@@ -30,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class MemberController {
 
     private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/login/oauth2/naver")
     @Operation(summary = "소셜 로그인_네이버", description = "네이버 소셜 로그인을 위한 URL을 리다이렉트 합니다.")
@@ -74,5 +70,11 @@ public class MemberController {
     public void deleteMember(HttpServletRequest request, HttpServletResponse response, @Parameter(hidden = true) @AuthPrincipal ApiMember apiMember) {
         memberService.deleteMember(request, response, apiMember);
 
+    }
+
+    @GetMapping("/validate")
+    @Operation(summary = "토큰 유효성 검증", description = "토큰의 유효성을 검증합니다.")
+    public void validateToken(@Parameter(hidden = true) @RequestHeader("Authorization") String token) {
+        jwtTokenProvider.validateToken(token);
     }
 }
