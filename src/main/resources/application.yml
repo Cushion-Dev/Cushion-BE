@@ -43,7 +43,7 @@ spring:
   jwt:
     secret: ${JWT_SECRET}
     token:
-      access-expiration-time: 5     # 5초
+      access-expiration-time: 604800000     # 7일
       refresh-expiration-time: 1209600000   # 14일
 
 ncp:
