@@ -72,9 +72,15 @@ public class MemberController {
 
     }
 
-    @GetMapping("/validate")
-    @Operation(summary = "토큰 유효성 검증", description = "토큰의 유효성을 검증합니다.")
-    public void validateToken(@Parameter(hidden = true) @RequestHeader("Authorization") String token) {
-        jwtTokenProvider.validateToken(token);
+    @GetMapping("/validate-token")
+    @Operation(summary = "refresh 토큰 유효성 검증", description = "refresh 토큰의 유효성을 검증합니다.")
+    public boolean validateToken(HttpServletRequest request) {
+        return memberService.validateToken(request);
+    }
+
+    @GetMapping("/reissue")
+    @Operation(summary = "액세스 토큰 재발급", description = "만료된 액세스 토큰을 재발급 받는다.")
+    public String reissueAccessToken(HttpServletRequest request) {
+        return memberService.reissueAccessToken(request);
     }
 }

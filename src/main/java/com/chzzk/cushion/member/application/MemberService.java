@@ -1,5 +1,9 @@
 package com.chzzk.cushion.member.application;
 
+import static com.chzzk.cushion.global.exception.ErrorCode.INVALID_JWT_TOKEN;
+
+import com.chzzk.cushion.global.exception.CushionException;
+import com.chzzk.cushion.global.jwt.JwtTokenProvider;
 import com.chzzk.cushion.member.domain.Member;
 import com.chzzk.cushion.member.domain.MemberRepository;
 import com.chzzk.cushion.member.dto.ApiMember;
@@ -23,6 +27,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
@@ -63,5 +68,31 @@ public class MemberService {
         } else {
             log.info("쿠키가 존재하지 않습니다.");
         }
+    }
+
+    public String reissueAccessToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            String name = cookie.getName();
+            if (name.equals("refreshToken")) {
+                String refreshToken = cookie.getValue();
+                Long memberId = jwtTokenProvider.extractMemberId(refreshToken);
+                jwtTokenProvider.validateToken(refreshToken);
+                return jwtTokenProvider.reissueAccessToken(refreshToken, memberId);
+            }
+        }
+        return null;
+    }
+
+    public boolean validateToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            String name = cookie.getName();
+            if (name.equals("refreshToken")) {
+                String refreshToken = cookie.getValue();
+                return jwtTokenProvider.validateToken(refreshToken);
+            }
+        }
+        throw new CushionException(INVALID_JWT_TOKEN);
     }
 }
